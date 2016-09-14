@@ -11,10 +11,6 @@ public class PlayerMovement : MonoBehaviour {
     private const int DIRECTION_EAST = 2;
     private const int DIRECTION_WEST = 3;
     private const int DIRECTION_NORTH = 0;
-	private static Vector2 LEFT = new Vector2 (-1, 0);
-	private static Vector2 UP = new Vector2 (0, 1);
-	private static Vector2 DOWN = new Vector2 (0, -1);
-	private static Vector2 RIGHT = new Vector2 (1, 0);
 
     // Use this for initialization
     void Start()
@@ -37,19 +33,19 @@ public class PlayerMovement : MonoBehaviour {
 		var horizontal = Input.GetAxis("Horizontal");
         if (vertical > 0) {
             animator.SetInteger("Direction", DIRECTION_NORTH);
-			rb.MovePosition(rb.position + speed*UP);
+			rb.MovePosition(rb.position + speed*Vector2.up);
 			animator.speed = 1;
         } else if (vertical < 0) {
 			animator.SetInteger("Direction", DIRECTION_SOUTH);
-			rb.MovePosition(rb.position + speed*DOWN);
+			rb.MovePosition(rb.position + speed*Vector2.down);
 			animator.speed = 1;
 		} else if (horizontal > 0) {
 			animator.SetInteger("Direction", DIRECTION_EAST);
-			rb.MovePosition(rb.position + speed*RIGHT);
+			rb.MovePosition(rb.position + speed*Vector2.right);
 			animator.speed = 1;
         } else if (horizontal < 0) {
 			animator.SetInteger ("Direction", DIRECTION_WEST);
-			rb.MovePosition (rb.position + speed*LEFT);
+			rb.MovePosition (rb.position + speed*Vector2.left);
 			animator.speed = 1;
 		} else {
 			animator.speed = 0;
