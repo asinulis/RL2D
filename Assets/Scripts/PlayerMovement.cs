@@ -5,6 +5,8 @@ public class PlayerMovement : MonoBehaviour {
 
     private Animator animator;
     private Rigidbody2D rb;
+	private Transform transform;
+	private float speed;
     private int DIRECTION_SOUTH = 1;
     private int DIRECTION_EAST = 2;
     private int DIRECTION_WEST = 3;
@@ -15,6 +17,8 @@ public class PlayerMovement : MonoBehaviour {
     {
         animator = this.GetComponent<Animator>();
         rb = this.GetComponent<Rigidbody2D>();
+		transform = GetComponent<Transform> ();
+		speed = 0.03f;
     }
 
     // Update is called once per frame
@@ -26,25 +30,25 @@ public class PlayerMovement : MonoBehaviour {
         if (vertical > 0)
         {
             animator.SetInteger("Direction", DIRECTION_NORTH);
-            Vector2 up = new Vector2(0f,0.01f);
+            Vector2 up = new Vector2(0f,speed);
 			rb.MovePosition(rb.GetRelativePoint(new Vector2(0,0))+up);
         }
         if (vertical < 0)
         {
             animator.SetInteger("Direction", DIRECTION_SOUTH);
-			Vector2 down = new Vector2(0f,-0.01f);
+			Vector2 down = new Vector2(0f,-speed);
 			rb.MovePosition(rb.GetRelativePoint(new Vector2(0,0))+down);
 		}
         if (horizontal > 0)
         {
             animator.SetInteger("Direction", DIRECTION_EAST);
-			Vector2 right = new Vector2(0.01f,0f);
+			Vector2 right = new Vector2(speed,0f);
 			rb.MovePosition(rb.GetRelativePoint(new Vector2(0,0))+right);
         }
         if (horizontal < 0)
         {
             animator.SetInteger("Direction", DIRECTION_WEST);
-			Vector2 left = new Vector2(-0.01f,0f);
+			Vector2 left = new Vector2(-speed,0f);
 			rb.MovePosition(rb.GetRelativePoint(new Vector2(0,0))+left);
         }
     }
