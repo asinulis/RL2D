@@ -28,6 +28,11 @@ public class PlayerMovement : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+		if (gameObject.transform.position.y > 0.75) {
+			GetComponent<SpriteRenderer> ().sortingOrder = 0;
+		} else {
+			GetComponent<SpriteRenderer> ().sortingOrder = 2;
+		}
 		var vertical = Input.GetAxis("Vertical");
 		var horizontal = Input.GetAxis("Horizontal");
         if (vertical > 0) {
