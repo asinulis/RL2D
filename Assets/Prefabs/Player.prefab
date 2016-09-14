@@ -21,9 +21,9 @@ GameObject:
   - 4: {fileID: 4000010551477928}
   - 212: {fileID: 212000011014645652}
   - 50: {fileID: 50000011950894266}
-  - 61: {fileID: 61000012543428954}
   - 114: {fileID: 114000014205851162}
   - 95: {fileID: 95000013027321118}
+  - 60: {fileID: 60000014172494128}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -52,7 +52,7 @@ Rigidbody2D:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000014280646094}
   m_UseAutoMass: 1
-  m_Mass: 0.30000004
+  m_Mass: 0.032527477
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 0
@@ -60,9 +60,9 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!61 &61000012543428954
-BoxCollider2D:
+  m_Constraints: 4
+--- !u!60 &60000014172494128
+PolygonCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -72,9 +72,17 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_Offset: {x: 0.33, y: -0.4}
-  serializedVersion: 2
-  m_Size: {x: 0.5, y: 0.6}
+  m_Offset: {x: 0, y: 0}
+  m_Points:
+    m_Paths:
+    - - {x: 0.30968645, y: -0.4903212}
+      - {x: 0.21574, y: -0.49181637}
+      - {x: 0.18383732, y: -0.54450166}
+      - {x: 0.192749, y: -0.61345404}
+      - {x: 0.31583062, y: -0.63}
+      - {x: 0.43657604, y: -0.6193101}
+      - {x: 0.45686004, y: -0.5731142}
+      - {x: 0.43018338, y: -0.5004002}
 --- !u!95 &95000013027321118
 Animator:
   serializedVersion: 3
@@ -131,7 +139,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1976209067
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: ae03ce52a574678489571933bc62bdd8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
