@@ -7,10 +7,14 @@ public class PlayerMovement : MonoBehaviour {
     private Rigidbody2D rb;
 	private Transform transform;
 	private float speed;
-    private int DIRECTION_SOUTH = 1;
-    private int DIRECTION_EAST = 2;
-    private int DIRECTION_WEST = 3;
-    private int DIRECTION_NORTH = 0;
+    private const int DIRECTION_SOUTH = 1;
+    private const int DIRECTION_EAST = 2;
+    private const int DIRECTION_WEST = 3;
+    private const int DIRECTION_NORTH = 0;
+	private static Vector2 LEFT = new Vector2 (-1, 0);
+	private static Vector2 UP = new Vector2 (0, 1);
+	private static Vector2 DOWN = new Vector2 (0, -1);
+	private static Vector2 RIGHT = new Vector2 (1, 0);
 
     // Use this for initialization
     void Start()
@@ -24,32 +28,26 @@ public class PlayerMovement : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        var vertical = Input.GetAxis("Vertical");
-        var horizontal = Input.GetAxis("Horizontal");
-
-        if (vertical > 0)
-        {
+		var vertical = Input.GetAxis("Vertical");
+		var horizontal = Input.GetAxis("Horizontal");
+        if (vertical > 0) {
             animator.SetInteger("Direction", DIRECTION_NORTH);
-            Vector2 up = new Vector2(0f,speed);
-			rb.MovePosition(rb.GetRelativePoint(new Vector2(0,0))+up);
-        }
-        if (vertical < 0)
-        {
-            animator.SetInteger("Direction", DIRECTION_SOUTH);
-			Vector2 down = new Vector2(0f,-speed);
-			rb.MovePosition(rb.GetRelativePoint(new Vector2(0,0))+down);
+			rb.MovePosition(rb.position + speed*UP);
+			animator.speed = 1;
+        } else if (vertical < 0) {
+			animator.SetInteger("Direction", DIRECTION_SOUTH);
+			rb.MovePosition(rb.position + speed*DOWN);
+			animator.speed = 1;
+		} else if (horizontal > 0) {
+			animator.SetInteger("Direction", DIRECTION_EAST);
+			rb.MovePosition(rb.position + speed*RIGHT);
+			animator.speed = 1;
+        } else if (horizontal < 0) {
+			animator.SetInteger ("Direction", DIRECTION_WEST);
+			rb.MovePosition (rb.position + speed*LEFT);
+			animator.speed = 1;
+		} else {
+			animator.speed = 0;
 		}
-        if (horizontal > 0)
-        {
-            animator.SetInteger("Direction", DIRECTION_EAST);
-			Vector2 right = new Vector2(speed,0f);
-			rb.MovePosition(rb.GetRelativePoint(new Vector2(0,0))+right);
-        }
-        if (horizontal < 0)
-        {
-            animator.SetInteger("Direction", DIRECTION_WEST);
-			Vector2 left = new Vector2(-speed,0f);
-			rb.MovePosition(rb.GetRelativePoint(new Vector2(0,0))+left);
-        }
     }
 }
