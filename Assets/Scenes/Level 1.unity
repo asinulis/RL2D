@@ -404,7 +404,7 @@ GameObject:
   - 50: {fileID: 1033866616}
   - 61: {fileID: 1033866615}
   m_Layer: 0
-  m_Name: Wall_South (1)
+  m_Name: Wall_North
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

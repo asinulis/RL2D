@@ -3,20 +3,20 @@ using System.Collections;
 
 public class PlayerMovement : MonoBehaviour {
 
-    private Animator animator;
-    private Rigidbody2D rb;
-	private Transform transform;
-	private float speed;
-    private const int DIRECTION_SOUTH = 1;
-    private const int DIRECTION_EAST = 2;
-    private const int DIRECTION_WEST = 3;
-    private const int DIRECTION_NORTH = 0;
+    Animator animator;
+    Rigidbody2D rb;
+	Transform transform;
+	float speed;
+    const int DIRECTION_SOUTH = 1;
+    const int DIRECTION_EAST = 2;
+    const int DIRECTION_WEST = 3;
+    const int DIRECTION_NORTH = 0;
 
     // Use this for initialization
     void Start()
     {
-        animator = this.GetComponent<Animator>();
-        rb = this.GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
 		transform = GetComponent<Transform> ();
 		speed = 0.03f;
     }
