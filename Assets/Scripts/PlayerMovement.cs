@@ -26,26 +26,26 @@ public class PlayerMovement : MonoBehaviour {
         if (vertical > 0)
         {
             animator.SetInteger("Direction", DIRECTION_NORTH);
-            Vector2 up = new Vector2(0,1);
-            rb.AddForce(up);
+            Vector2 up = new Vector2(0f,0.01f);
+			rb.MovePosition(rb.GetRelativePoint(new Vector2(0,0))+up);
         }
-        else if (vertical < 0)
+        if (vertical < 0)
         {
             animator.SetInteger("Direction", DIRECTION_SOUTH);
-            Vector2 up = new Vector2(0, -1);
-            rb.AddForce(up);
-        }
-        else if (horizontal > 0)
+			Vector2 down = new Vector2(0f,-0.01f);
+			rb.MovePosition(rb.GetRelativePoint(new Vector2(0,0))+down);
+		}
+        if (horizontal > 0)
         {
             animator.SetInteger("Direction", DIRECTION_EAST);
-            Vector2 up = new Vector2(1, 0);
-            rb.AddForce(up);
+			Vector2 right = new Vector2(0.01f,0f);
+			rb.MovePosition(rb.GetRelativePoint(new Vector2(0,0))+right);
         }
-        else if (horizontal < 0)
+        if (horizontal < 0)
         {
             animator.SetInteger("Direction", DIRECTION_WEST);
-            Vector2 up = new Vector2(-1, 0);
-            rb.AddForce(up);
+			Vector2 left = new Vector2(-0.01f,0f);
+			rb.MovePosition(rb.GetRelativePoint(new Vector2(0,0))+left);
         }
     }
 }
