@@ -5,6 +5,7 @@ using System;
 public class PlayerMovement : MonoBehaviour {
 
     Animator animator;
+	Camera camera;
     Rigidbody2D rb;
 	Transform transform;
 	PlayerStats stats;
@@ -19,16 +20,12 @@ public class PlayerMovement : MonoBehaviour {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
 		transform = GetComponent<Transform> ();
+		camera = Camera.main;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-		if (transform.position.y > 0.75) {
-			GetComponent<SpriteRenderer> ().sortingOrder = 0;
-		} else {
-			GetComponent<SpriteRenderer> ().sortingOrder = 2;
-		}
 		var vertical = Input.GetAxis("Vertical");
 		var horizontal = Input.GetAxis("Horizontal");
 
@@ -38,16 +35,20 @@ public class PlayerMovement : MonoBehaviour {
 			animator.speed = 0;
 		} else {
 			animator.speed = stats.Speed / PlayerStats.BASE_SPEED;
+			if (vertical > 0) {
+				animator.Play ("PlayerMovementNorth");
+			} else if (vertical < 0) {
+				animator.Play ("PlayerMovementSouth");
+			} else if (horizontal > 0) {
+				animator.Play ("PlayerMovementEast");
+			} else if (horizontal < 0) {
+				animator.Play ("PlayerMovementWest");
+			}
 		}
-        if (vertical > 0) {
-            animator.SetInteger("Direction", DIRECTION_NORTH);
-		} else if (vertical < 0) {
-			animator.SetInteger("Direction", DIRECTION_SOUTH);
-		} else if (horizontal > 0) {
-			animator.SetInteger("Direction", DIRECTION_EAST);
-        } else if (horizontal < 0) {
-			animator.SetInteger ("Direction", DIRECTION_WEST);
-		}
+		Vector3 pos = new Vector3(transform.position.x, transform.position.y, Mathf.Min(transform.position.y,0));
+		transform.position = pos;
+		pos.z = -10;
+		camera.transform.position = pos;
     }
 
 	public void setPlayerStats(PlayerStats stats){
