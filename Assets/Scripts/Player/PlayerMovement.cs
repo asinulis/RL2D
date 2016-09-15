@@ -22,7 +22,7 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
 		if (transform.position.y > 0.75) {
 			GetComponent<SpriteRenderer> ().sortingOrder = 0;
