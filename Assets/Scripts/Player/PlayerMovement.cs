@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class PlayerMovement : MonoBehaviour {
 
@@ -7,7 +8,6 @@ public class PlayerMovement : MonoBehaviour {
     Rigidbody2D rb;
 	Transform transform;
 	PlayerStats stats;
-	float speed;
     const int DIRECTION_SOUTH = 1;
     const int DIRECTION_EAST = 2;
     const int DIRECTION_WEST = 3;
@@ -31,24 +31,22 @@ public class PlayerMovement : MonoBehaviour {
 		}
 		var vertical = Input.GetAxis("Vertical");
 		var horizontal = Input.GetAxis("Horizontal");
+
+		transform.Translate (stats.Speed * (Math.Sign(vertical) * Vector2.up + Math.Sign(horizontal) * Vector2.right));
+
+		if (vertical == 0 && horizontal == 0) {
+			animator.speed = 0;
+		} else {
+			animator.speed = stats.Speed / PlayerStats.BASE_SPEED;
+		}
         if (vertical > 0) {
             animator.SetInteger("Direction", DIRECTION_NORTH);
-			rb.MovePosition(rb.position + stats.Speed*Vector2.up);
-			animator.speed = stats.Speed / PlayerStats.BASE_SPEED;
-        } else if (vertical < 0) {
+		} else if (vertical < 0) {
 			animator.SetInteger("Direction", DIRECTION_SOUTH);
-			rb.MovePosition(rb.position + stats.Speed*Vector2.down);
-			animator.speed = stats.Speed / PlayerStats.BASE_SPEED;
 		} else if (horizontal > 0) {
 			animator.SetInteger("Direction", DIRECTION_EAST);
-			rb.MovePosition(rb.position + stats.Speed*Vector2.right);
-			animator.speed = stats.Speed / PlayerStats.BASE_SPEED;
         } else if (horizontal < 0) {
 			animator.SetInteger ("Direction", DIRECTION_WEST);
-			rb.MovePosition (rb.position + stats.Speed*Vector2.left);
-			animator.speed = stats.Speed / PlayerStats.BASE_SPEED;
-		} else {
-			animator.speed = 0;
 		}
     }
 

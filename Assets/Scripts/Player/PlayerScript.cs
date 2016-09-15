@@ -7,8 +7,8 @@ public class PlayerScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		stats = new PlayerStats (gameObject, start_effects:new List<AbstractEffect>{new SprintEffect()});
-		GetComponent<PlayerMovement> ().setPlayerStats (stats);
+		stats = new PlayerStats (gameObject, new List<AbstractEffect>{new SprintEffect()});
+		GetComponent<PlayerMovement>().setPlayerStats (stats);
 	}
 	
 	// Update is called once per frame
