@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class UnitStats {
 	public const int BASE_HP = 100;
-	public const float BASE_SPEED = 0.03f;
+	public const float BASE_SPEED = 0.7f;
 	public const float BASE_ATTACK_RATE = 0.3f;
 	public const float BASE_ATTACK_SPEED = 0.6f;
 

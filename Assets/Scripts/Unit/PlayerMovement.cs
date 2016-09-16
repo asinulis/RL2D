@@ -12,23 +12,23 @@ public class PlayerMovement : MonoBehaviour {
 	UnitStats stats;
 	public Text UIText;
 
-    // Use this for initialization
     void Start()
     {
-        animator = GetComponent<Animator>();
+		animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
 		transform = GetComponent<Transform> ();
 		camera = Camera.main;
-		UIText.text = "HP: " + stats.hp.ToString ();
+		displayPlayerStats ();
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
-		var vertical = Input.GetAxis("Vertical");
-		var horizontal = Input.GetAxis("Horizontal");
+		float vertical = Input.GetAxis("Vertical");
+		float horizontal = Input.GetAxis("Horizontal");
 
-		transform.Translate (stats.Speed * (Math.Sign(vertical) * Vector2.up + Math.Sign(horizontal) * Vector2.right));
+		Vector3 moveBy = new Vector3 (Math.Sign (horizontal), Math.Sign (vertical), Math.Sign(vertical));
+		moveBy *= Time.deltaTime * stats.Speed;
+		transform.Translate (moveBy);
 
 		if (vertical == 0 && horizontal == 0) {
 			animator.speed = 0;
@@ -44,15 +44,12 @@ public class PlayerMovement : MonoBehaviour {
 				animator.Play ("PlayerMovementWest");
 			}
 		}
-		Vector3 pos = new Vector3 (transform.position.x, transform.position.y, transform.position.y);//Mathf.Min(transform.position.y,0));
-		transform.position = pos;
-		pos.z = -10;
-		camera.transform.position = pos;
+		//print ("Moving by " + moveBy.x.ToString () + "/" + moveBy.y.ToString () + "/" + moveBy.z.ToString ()+". DeltaTime: " + Time.deltaTime.ToString());
     }
 
 	void OnCollisionEnter2D(Collision2D other)
 	{
-		print ("Collision");
+		transform.position = new Vector3 (transform.position.x, transform.position.y, transform.position.y);
 		if (other.gameObject.tag == "Enemy") {
 			stats.hp -= 10;
 			displayPlayerStats ();
@@ -64,6 +61,6 @@ public class PlayerMovement : MonoBehaviour {
 	}
 
 	public void displayPlayerStats(){
-		UIText.text = "HP: " + stats.hp.ToString ();
+		UIText.text = "HP: " + stats.hp.ToString () + "\nRunes: " + "0/0/0/0";
 	}
 }
