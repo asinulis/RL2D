@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: ed029c7a8f8a5f641ba8ccb24cc59c03
-timeCreated: 1473878757
+timeCreated: 1474048518
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -56,7 +56,7 @@ TextureImporter:
   alignment: 1
   spritePivot: {x: 0, y: 1}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 80
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
   textureType: 8
@@ -68,13 +68,13 @@ TextureImporter:
       name: MainGuySpriteSheet_0
       rect:
         serializedVersion: 2
-        x: 3
+        x: 2
         y: 108
-        width: 28
-        height: 36
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
+        width: 29
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 1}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
@@ -84,9 +84,9 @@ TextureImporter:
         x: 48
         y: 108
         width: 29
-        height: 36
-      alignment: 1
-      pivot: {x: 0, y: 1}
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -97,22 +97,22 @@ TextureImporter:
         x: 94
         y: 108
         width: 29
-        height: 36
-      alignment: 1
-      pivot: {x: 0, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 34, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: MainGuySpriteSheet_3
       rect:
         serializedVersion: 2
-        x: 0
+        x: 2
         y: 72
-        width: 41.333332
-        height: 36
-      alignment: 1
-      pivot: {x: 0, y: 1}
+        width: 31
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -120,12 +120,12 @@ TextureImporter:
       name: MainGuySpriteSheet_4
       rect:
         serializedVersion: 2
-        x: 41
+        x: 48
         y: 72
-        width: 41.333332
-        height: 36
-      alignment: 1
-      pivot: {x: 0, y: 1}
+        width: 31
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -133,12 +133,12 @@ TextureImporter:
       name: MainGuySpriteSheet_5
       rect:
         serializedVersion: 2
-        x: 82
-        y: 72
-        width: 41.333332
-        height: 36
-      alignment: 1
-      pivot: {x: 0, y: 1}
+        x: 2
+        y: 37
+        width: 29
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -146,12 +146,12 @@ TextureImporter:
       name: MainGuySpriteSheet_6
       rect:
         serializedVersion: 2
-        x: 0
-        y: 36
-        width: 41.333332
-        height: 36
-      alignment: 1
-      pivot: {x: 0, y: 1}
+        x: 48
+        y: 37
+        width: 29
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -159,12 +159,12 @@ TextureImporter:
       name: MainGuySpriteSheet_7
       rect:
         serializedVersion: 2
-        x: 41
-        y: 36
-        width: 41.333332
-        height: 36
-      alignment: 1
-      pivot: {x: 0, y: 1}
+        x: 94
+        y: 37
+        width: 30
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -172,12 +172,12 @@ TextureImporter:
       name: MainGuySpriteSheet_8
       rect:
         serializedVersion: 2
-        x: 82
-        y: 36
-        width: 41.333332
-        height: 36
-      alignment: 1
-      pivot: {x: 0, y: 1}
+        x: 0
+        y: 1
+        width: 30
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -185,12 +185,12 @@ TextureImporter:
       name: MainGuySpriteSheet_9
       rect:
         serializedVersion: 2
-        x: 0
+        x: 46
         y: 0
-        width: 41.333332
-        height: 36
-      alignment: 1
-      pivot: {x: 0, y: 1}
+        width: 31
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -198,12 +198,12 @@ TextureImporter:
       name: MainGuySpriteSheet_10
       rect:
         serializedVersion: 2
-        x: 41
+        x: 92
         y: 0
-        width: 41.333332
-        height: 36
-      alignment: 1
-      pivot: {x: 0, y: 1}
+        width: 31
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -211,12 +211,12 @@ TextureImporter:
       name: MainGuySpriteSheet_11
       rect:
         serializedVersion: 2
-        x: 82
-        y: 0
-        width: 41.333332
-        height: 36
-      alignment: 1
-      pivot: {x: 0, y: 1}
+        x: 93
+        y: 73
+        width: 31
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0

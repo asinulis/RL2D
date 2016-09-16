@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 using System;
 
 public class PlayerMovement : MonoBehaviour {
 
     Animator animator;
-	Camera camera;
-    Rigidbody2D rb;
+    //Rigidbody2D rb;
 	Transform transform;
 	UnitStats stats;
 	public Text UIText;
@@ -15,25 +15,32 @@ public class PlayerMovement : MonoBehaviour {
     void Start()
     {
 		animator = GetComponent<Animator>();
-        rb = GetComponent<Rigidbody2D>();
+		stats = new UnitStats (this.gameObject, new List<AbstractEffect>{new SprintEffect()});
+		setPlayerStats (stats);
+        //rb = GetComponent<Rigidbody2D>();
 		transform = GetComponent<Transform> ();
-		camera = Camera.main;
 		displayPlayerStats ();
     }
 
     void FixedUpdate()
     {
+		if (Input.GetKey (KeyCode.LeftShift) || Input.GetKey (KeyCode.RightShift)) {
+			stats.triggerEffect ();
+		} else {
+			stats.untriggerEffect ();
+		}
+
 		float vertical = Input.GetAxis("Vertical");
 		float horizontal = Input.GetAxis("Horizontal");
 
 		Vector3 moveBy = new Vector3 (Math.Sign (horizontal), Math.Sign (vertical), Math.Sign(vertical));
-		moveBy *= Time.deltaTime * stats.Speed;
+		moveBy *= Time.deltaTime * stats.speed;
 		transform.Translate (moveBy);
 
 		if (vertical == 0 && horizontal == 0) {
 			animator.speed = 0;
 		} else {
-			animator.speed = stats.Speed / UnitStats.BASE_SPEED;
+			animator.speed = stats.speed / UnitStats.BASE_SPEED;
 			if (vertical > 0) {
 				animator.Play ("PlayerMovementNorth");
 			} else if (vertical < 0) {

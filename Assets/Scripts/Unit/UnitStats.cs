@@ -2,16 +2,17 @@
 using UnityEngine;
 
 public class UnitStats {
-	public const int BASE_HP = 100;
-	public const float BASE_SPEED = 0.7f;
-	public const float BASE_ATTACK_RATE = 0.3f;
-	public const float BASE_ATTACK_SPEED = 0.6f;
+	public const int 	BASE_HP = 100;
+	public const float 	BASE_SPEED = 0.7f;
+	public const float 	BASE_ATTACK_RATE = 0.3f;
+	public const float 	BASE_ATTACK_SPEED = 0.6f;
 
 	GameObject playerObject;
 	public int hp;
-	public float Speed;
+	public float speed;
 	float attack_rate;
 	float attack_speed;
+	float luck;
 	List<AbstractEffect> triggerEffects = new List<AbstractEffect>();
 	AbstractEffect currentTriggerEffect;
 	List<AbstractEffect> activeEffects = new List<AbstractEffect> ();
@@ -51,7 +52,7 @@ public class UnitStats {
 
 	public void updateStats(){
 		hp = BASE_HP;
-		Speed = BASE_SPEED;
+		speed = BASE_SPEED;
 		attack_rate = BASE_ATTACK_RATE;
 		attack_speed = BASE_ATTACK_SPEED;
 		foreach (AbstractEffect effect in activeEffects) {

@@ -9,6 +9,6 @@ public class SprintEffect : StatEffect {
 	}
 
 	protected override void applyStatChange(UnitStats stats){
-		stats.Speed *= 2.0f;
+		stats.speed *= 2.0f;
 	}
 }
