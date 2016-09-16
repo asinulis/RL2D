@@ -8,7 +8,7 @@ public class SprintEffect : StatEffect {
 		}
 	}
 
-	protected override void applyStatChange(PlayerStats stats){
+	protected override void applyStatChange(UnitStats stats){
 		stats.Speed *= 2.0f;
 	}
 }

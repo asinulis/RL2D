@@ -3,11 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class PlayerScript : MonoBehaviour {
-	PlayerStats stats;
+	UnitStats stats;
 
 	// Use this for initialization
 	void Start () {
-		stats = new PlayerStats (gameObject, new List<AbstractEffect>{new SprintEffect()});
+		stats = new UnitStats (gameObject, new List<AbstractEffect>{new SprintEffect()});
 		GetComponent<PlayerMovement>().setPlayerStats (stats);
 	}
 	

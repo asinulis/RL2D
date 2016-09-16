@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System;
 
@@ -8,11 +9,8 @@ public class PlayerMovement : MonoBehaviour {
 	Camera camera;
     Rigidbody2D rb;
 	Transform transform;
-	PlayerStats stats;
-    const int DIRECTION_SOUTH = 1;
-    const int DIRECTION_EAST = 2;
-    const int DIRECTION_WEST = 3;
-    const int DIRECTION_NORTH = 0;
+	UnitStats stats;
+	public Text UIText;
 
     // Use this for initialization
     void Start()
@@ -21,6 +19,7 @@ public class PlayerMovement : MonoBehaviour {
         rb = GetComponent<Rigidbody2D>();
 		transform = GetComponent<Transform> ();
 		camera = Camera.main;
+		UIText.text = "HP: " + stats.hp.ToString ();
     }
 
     // Update is called once per frame
@@ -34,7 +33,7 @@ public class PlayerMovement : MonoBehaviour {
 		if (vertical == 0 && horizontal == 0) {
 			animator.speed = 0;
 		} else {
-			animator.speed = stats.Speed / PlayerStats.BASE_SPEED;
+			animator.speed = stats.Speed / UnitStats.BASE_SPEED;
 			if (vertical > 0) {
 				animator.Play ("PlayerMovementNorth");
 			} else if (vertical < 0) {
@@ -45,13 +44,26 @@ public class PlayerMovement : MonoBehaviour {
 				animator.Play ("PlayerMovementWest");
 			}
 		}
-		Vector3 pos = new Vector3(transform.position.x, transform.position.y, Mathf.Min(transform.position.y,0));
+		Vector3 pos = new Vector3 (transform.position.x, transform.position.y, transform.position.y);//Mathf.Min(transform.position.y,0));
 		transform.position = pos;
 		pos.z = -10;
 		camera.transform.position = pos;
     }
 
-	public void setPlayerStats(PlayerStats stats){
+	void OnCollisionEnter2D(Collision2D other)
+	{
+		print ("Collision");
+		if (other.gameObject.tag == "Enemy") {
+			stats.hp -= 10;
+			displayPlayerStats ();
+		}
+	}
+
+	public void setPlayerStats(UnitStats stats){
 		this.stats = stats;
+	}
+
+	public void displayPlayerStats(){
+		UIText.text = "HP: " + stats.hp.ToString ();
 	}
 }

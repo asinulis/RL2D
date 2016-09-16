@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerStats {
+public class UnitStats {
 	public const int BASE_HP = 100;
 	public const float BASE_SPEED = 0.03f;
 	public const float BASE_ATTACK_RATE = 0.3f;
 	public const float BASE_ATTACK_SPEED = 0.6f;
 
 	GameObject playerObject;
-	int hp;
+	public int hp;
 	public float Speed;
 	float attack_rate;
 	float attack_speed;
@@ -16,7 +16,7 @@ public class PlayerStats {
 	AbstractEffect currentTriggerEffect;
 	List<AbstractEffect> activeEffects = new List<AbstractEffect> ();
 
-	public PlayerStats(GameObject playerObject, List<AbstractEffect> start_effects = null){
+	public UnitStats(GameObject playerObject, List<AbstractEffect> start_effects = null){
 		this.playerObject = playerObject;
 		if (start_effects != null) {
 			foreach (AbstractEffect effect in start_effects) {
