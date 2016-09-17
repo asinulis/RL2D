@@ -4,19 +4,32 @@ using System.Collections;
 
 public class EnemyBehaviour : MonoBehaviour {
 
-	Weapon mainWeapon;
-	public float damage;
+	public UnitStats stats;
+	public Weapon mainWeapon;
 
 	// Use this for initialization
 	void Start () {
-		mainWeapon = new Weapon (this.gameObject, damage); 
+		stats = new UnitStats (this.gameObject);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		//int rnd = Random.Range (1, 1000);
-		//if (rnd > 990) {
-			//mainWeapon.Shoot ();
-		//}
+		Vector2 rnd0 = Random.insideUnitCircle;
+		Vector3 rnd = new Vector3(rnd0.x, rnd0.y, 0);
+		this.transform.position += rnd*0.1f;
+
+		if (stats.hp <= 0) {
+			GameMaster.DeactivateObject (this.gameObject);
+		}
+	}
+
+	void OnTriggerEnter2D(Collider2D other){
+		if (other.gameObject.tag == "Bullet") {
+			stats.hp -= 10;
+			GameObject.Destroy (other.gameObject);
+			//GameMaster.DeactivateCollider (other.gameObject.GetComponent<Collider2D> ());
+			//GameMaster.DeactivateObject (other.gameObject);
+			Debug.Log ("Enemy " + this.gameObject.name + " has been hit.");
+		}
 	}
 }

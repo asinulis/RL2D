@@ -8,20 +8,21 @@ public class PlayerBehaviour : MonoBehaviour {
 
     Animator animator;
     Rigidbody2D rb;
-	Transform transform;
-	UnitStats stats;
-	Weapon mainWeapon;
+	Transform trans;
+	public UnitStats stats;
+	public Weapon mainWeapon;
 	public Text UIText;
-	int noOfTriggers = 0;
-	float nextShot;
+	public int noOfTriggers = 0;
+	public float nextShot;
 
     void Start()
     {
 		animator = GetComponent<Animator>();
 		stats = new UnitStats (this.gameObject, new List<AbstractEffect>{new SprintEffect()});
-		transform = GetComponent<Transform> ();
+		stats.attack_rate = 100;
+		trans = GetComponent<Transform> ();
 		rb = GetComponent<Rigidbody2D> ();
-		mainWeapon = new Weapon (this.gameObject, stats.damage);
+		mainWeapon = GetComponentInChildren<Weapon> ();
 		nextShot = Time.time;
 		checkForComponents ();
 		setPlayerStats (stats);
@@ -46,7 +47,7 @@ public class PlayerBehaviour : MonoBehaviour {
 
 		Vector3 moveBy = new Vector3 (Math.Sign (horizontal), Math.Sign (vertical), 0f); // Math.Sign(vertical));
 		moveBy *= Time.deltaTime * stats.speed;
-		transform.Translate (moveBy);
+		trans.Translate (moveBy);
 
 		if (vertical == 0 && horizontal == 0) {
 			animator.speed = 0;
@@ -67,10 +68,13 @@ public class PlayerBehaviour : MonoBehaviour {
 
 	void OnCollisionEnter2D(Collision2D other)
 	{
-		//transform.position = new Vector3 (transform.position.x, transform.position.y, transform.position.y);
 		if (other.gameObject.tag == "Enemy") {
 			stats.hp -= 10;
 			displayPlayerStats ();
+			if (stats.hp <= 0) {
+				Debug.Log ("You are dead.");
+				GameMaster.DeactivateObject (this.gameObject);
+			}
 		}
 	}
 
@@ -107,7 +111,7 @@ public class PlayerBehaviour : MonoBehaviour {
 		if (UIText == null) {
 			Debug.LogError ("Missing UIText component during PlayerBehaviour initialization");
 		}
-		if (transform == null) {
+		if (trans == null) {
 			Debug.LogError ("Missing Transform component during PlayerBehaviour initialization");
 		}
 		if (rb == null) {

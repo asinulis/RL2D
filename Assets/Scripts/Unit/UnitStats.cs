@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class UnitStats {
 	public const int 	BASE_HP = 100;
 	public const float 	BASE_SPEED = 0.7f;
