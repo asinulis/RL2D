@@ -14,6 +14,6 @@ public class UpdateZCoordinate : MonoBehaviour {
 	}
 
 	void adjustPosition(){
-		transform.position = new Vector3 (transform.position.x, transform.position.y, transform.position.y);
+		//transform.position = new Vector3 (transform.position.x, transform.position.y, transform.position.y);
 	}
 }

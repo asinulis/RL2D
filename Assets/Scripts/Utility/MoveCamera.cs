@@ -3,7 +3,6 @@ using System.Collections;
 
 public class MoveCamera : MonoBehaviour {
 	
-	// Update is called once per frame
 	void FixedUpdate () {
 		Application.targetFrameRate = 25;
 		GameObject player = GameObject.Find ("Player");
