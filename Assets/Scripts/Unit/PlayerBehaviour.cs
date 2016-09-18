@@ -26,7 +26,6 @@ public class PlayerBehaviour : MonoBehaviour {
 		nextShot = Time.time;
 		checkForComponents ();
 		setPlayerStats (stats);
-		displayPlayerStats ();
     }
 
     void FixedUpdate()
@@ -70,7 +69,6 @@ public class PlayerBehaviour : MonoBehaviour {
 	{
 		if (other.gameObject.tag == "Enemy") {
 			stats.hp -= 10;
-			displayPlayerStats ();
 			if (stats.hp <= 0) {
 				Debug.Log ("You are dead.");
 				GameMaster.DeactivateObject (this.gameObject);
@@ -80,10 +78,6 @@ public class PlayerBehaviour : MonoBehaviour {
 
 	public void setPlayerStats(UnitStats stats){
 		this.stats = stats;
-	}
-
-	public void displayPlayerStats(){
-		UIText.text = "HP: " + stats.hp.ToString () + "\nRunes: " + "0/0/0/0";
 	}
 
 	public void leftTriggerState(){

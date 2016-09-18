@@ -4,16 +4,18 @@ using System.Collections;
 public class BulletLifetime : MonoBehaviour {
 
 	public float lifetime;
-	// Use this for initialization
-	void Start () {
-		lifetime = 10f;
+
+	void Start()
+	{
+		lifetime = 10f + Random.value;
 	}
-	
-	// Update is called once per frame
+
 	void Update () {
 		lifetime -= Time.deltaTime;
 		if (lifetime <= 0) {
-			GameMaster.DeactivateObject(this.gameObject);
+			GameMaster.Destroy (gameObject.GetComponent<Collider2D> ());
+			GameMaster.Destroy (gameObject.GetComponent<Animator> ());
+			//GameMaster.DeactivateObject(this.gameObject);
 		}
 	}
 }
