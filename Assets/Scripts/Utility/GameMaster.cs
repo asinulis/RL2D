@@ -4,7 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class GameMaster : MonoBehaviour {
-
 	public static GameMaster GM;
 
 	public List<GameObject> prefabPlayers;
@@ -39,25 +38,17 @@ public class GameMaster : MonoBehaviour {
 			GM = this;
 	}
 
-	void Start(){ checkComponents (); instantiateObjects (); setupCamera (); }
+	void Start(){ 
+		GameObject obj = Resources.Load<GameObject> ("Bullet");
+		print (obj);
+		checkComponents (); instantiateObjects (); setupCamera (); }
 
-	void FixedUpdate(){ displayUI (); }
+	void FixedUpdate(){ checkPlayerStatus (); displayUI (); }
 
-	public void CreateBullet(Vector3 position){
+	public GameObject CreateBullet(Vector3 position, Bullet.BulletType type, Bullet.BulletElement element){
 		bullets = Instantiate (prefabBullets, position, Quaternion.identity, this.transform) as GameObject;
+		return bullets;	
 	}
-
-	/*void cameraFollow()
-	{
-		Application.targetFrameRate = 25;
-		if (playerObj != null) {
-			Camera.main.transform.position = playerObj.transform.position - new Vector3 (0, 0, 10);
-
-			if (Input.GetKey (KeyCode.KeypadPlus)) {
-				transform.eulerAngles += new Vector3 (0, 1, 0);
-			}
-		}
-	}*/
 
 	void displayUI ()
 	{
@@ -93,7 +84,6 @@ public class GameMaster : MonoBehaviour {
 	{
 		Debug.Log ("CheckComponents() successful. Instantiating objects.");
 		playerObj = Instantiate(prefabPlayers[0], Vector3.zero, Quaternion.identity, GameObject.Find("Units").transform) as GameObject;
-		playerObj.GetComponent<PlayerBehaviour> ().UIText = UIHPText;
 		Debug.Log ("Instantiated player instance.");
 		for (int i = 0; i < 1; i++) {
 			Vector2 pos = Random.insideUnitCircle;
@@ -103,5 +93,12 @@ public class GameMaster : MonoBehaviour {
 		}
 		background = Instantiate (prefabBackground, Vector3.zero, Quaternion.identity) as GameObject;
 		Debug.Log ("Instantiated background.");
+	}
+
+	void checkPlayerStatus(){
+		if (playerObj.GetComponent<PlayerBehaviour>().stats.hp <= 0) {
+			Debug.Log ("You are dead.");
+			GameMaster.DeactivateObject (playerObj);
+		}
 	}
 }

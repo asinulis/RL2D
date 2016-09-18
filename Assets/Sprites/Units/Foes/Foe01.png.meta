@@ -1,12 +1,12 @@
 fileFormatVersion: 2
 guid: ed029c7a8f8a5f641ba8ccb24cc59c03
-timeCreated: 1474048518
+timeCreated: 1474191708
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: MainGuySpriteSheet_0
-    21300002: MainGuySpriteSheet_1
-    21300004: MainGuySpriteSheet_2
+    21300000: FoeSouth0
+    21300002: FoeSouth1
+    21300004: FoeSouth2
     21300006: MainGuySpriteSheet_3
     21300008: MainGuySpriteSheet_4
     21300010: MainGuySpriteSheet_5
@@ -65,7 +65,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: MainGuySpriteSheet_0
+      name: FoeSouth0
       rect:
         serializedVersion: 2
         x: 2
@@ -78,7 +78,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: MainGuySpriteSheet_1
+      name: FoeSouth1
       rect:
         serializedVersion: 2
         x: 48
@@ -91,7 +91,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: MainGuySpriteSheet_2
+      name: FoeSouth2
       rect:
         serializedVersion: 2
         x: 94
@@ -107,10 +107,10 @@ TextureImporter:
       name: MainGuySpriteSheet_3
       rect:
         serializedVersion: 2
-        x: 2
-        y: 72
-        width: 31
-        height: 35
+        x: 3
+        y: 73
+        width: 29
+        height: 34
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -120,10 +120,10 @@ TextureImporter:
       name: MainGuySpriteSheet_4
       rect:
         serializedVersion: 2
-        x: 48
-        y: 72
-        width: 31
-        height: 35
+        x: 49
+        y: 73
+        width: 29
+        height: 34
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -161,7 +161,7 @@ TextureImporter:
         serializedVersion: 2
         x: 94
         y: 37
-        width: 30
+        width: 29
         height: 34
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -172,10 +172,10 @@ TextureImporter:
       name: MainGuySpriteSheet_8
       rect:
         serializedVersion: 2
-        x: 0
-        y: 1
-        width: 30
-        height: 35
+        x: 1
+        y: 2
+        width: 29
+        height: 34
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -185,10 +185,10 @@ TextureImporter:
       name: MainGuySpriteSheet_9
       rect:
         serializedVersion: 2
-        x: 46
-        y: 0
-        width: 31
-        height: 35
+        x: 47
+        y: 1
+        width: 29
+        height: 34
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -198,10 +198,10 @@ TextureImporter:
       name: MainGuySpriteSheet_10
       rect:
         serializedVersion: 2
-        x: 92
-        y: 0
-        width: 31
-        height: 35
+        x: 93
+        y: 1
+        width: 29
+        height: 34
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -211,9 +211,9 @@ TextureImporter:
       name: MainGuySpriteSheet_11
       rect:
         serializedVersion: 2
-        x: 93
+        x: 94
         y: 73
-        width: 31
+        width: 29
         height: 34
       alignment: 0
       pivot: {x: 0.5, y: 0.5}

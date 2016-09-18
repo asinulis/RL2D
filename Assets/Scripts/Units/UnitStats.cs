@@ -10,6 +10,7 @@ public class UnitStats {
 	public const float 	BASE_DAMAGE = 10;
 
 	GameObject playerObject;
+
 	public int hp;
 	public float speed;
 	public float attack_rate;

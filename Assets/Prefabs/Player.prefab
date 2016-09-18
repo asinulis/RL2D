@@ -31,15 +31,15 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &1000012488062472
+--- !u!1 &1000014029824464
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 4000012839354102}
-  - 114: {fileID: 114000010808209794}
+  - 4: {fileID: 4000013513771740}
+  - 114: {fileID: 114000010733604688}
   m_Layer: 0
   m_Name: Gun
   m_TagString: Untagged
@@ -58,15 +58,15 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 4000012839354102}
+  - {fileID: 4000013513771740}
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!4 &4000012839354102
+--- !u!4 &4000013513771740
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000012488062472}
+  m_GameObject: {fileID: 1000014029824464}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -140,23 +140,21 @@ MonoBehaviour:
     attack_speed: 0.6
     luck: 0
     damage: 10
-  mainWeapon: {fileID: 114000010808209794}
+  mainWeapon: {fileID: 0}
   UIText: {fileID: 0}
   noOfTriggers: 0
   nextShot: 2.19
---- !u!114 &114000010808209794
+--- !u!114 &114000010733604688
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000012488062472}
+  m_GameObject: {fileID: 1000014029824464}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 847840356be3e594c8d7373937c0a0f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 1000010179494642, guid: 51e9ed517bcbc2541b629ef496296206,
-    type: 2}
 --- !u!212 &212000010939786262
 SpriteRenderer:
   m_ObjectHideFlags: 1
