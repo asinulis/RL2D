@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 
-public class PlayerBehaviour : MonoBehaviour {
+public class Player : Unit {
 
     Animator animator;
     Rigidbody2D rb;
@@ -12,7 +12,6 @@ public class PlayerBehaviour : MonoBehaviour {
 	GameObject gun;
 	public UnitStats stats;
 	public Weapon mainWeapon;
-	public int noOfTriggers = 0;
 	public float nextShot;
 	enum Attribute {FLYING, INVISBLE};
 	Dictionary<Attribute, bool> dict = new Dictionary<Attribute, bool>();
@@ -51,20 +50,6 @@ public class PlayerBehaviour : MonoBehaviour {
 
 	public void setPlayerStats(UnitStats stats){
 		this.stats = stats;
-	}
-
-	public void leftTriggerState(){
-		noOfTriggers--;
-		if (noOfTriggers == 0) {
-			//Debug.Log ("You have left the trigger zone, changing back layer.");
-			GetComponent<SpriteRenderer> ().sortingOrder = 1;
-		}
-	}
-
-	public void enterTriggerState(){
-		noOfTriggers++;
-		//Debug.Log ("You have walked into the trigger, changing layer temporarily. Layers: " + noOfTriggers.ToString());
-		GetComponent<SpriteRenderer> ().sortingOrder = -10;
 	}
 
 	void checkForComponents()

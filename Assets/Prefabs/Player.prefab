@@ -23,8 +23,7 @@ GameObject:
   - 50: {fileID: 50000011023367640}
   - 95: {fileID: 95000011143613762}
   - 61: {fileID: 61000011809887832}
-  - 114: {fileID: 114000010440400966}
-  - 114: {fileID: 114000013085181230}
+  - 114: {fileID: 114000010395795706}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -168,7 +167,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114000010440400966
+--- !u!114 &114000010395795706
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -176,19 +175,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 1000011995876696}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae45f974f43c467459769e8e44e9c168, type: 3}
+  m_Script: {fileID: 11500000, guid: 68ea5cd905cdae846a736af8b90e5084, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectsBehind: []
+  objectsInFront: []
   stats:
-    hp: 100
-    speed: 0.7
-    attack_rate: 100
-    attack_speed: 0.6
+    hp: 0
+    speed: 0
+    attack_rate: 0
+    attack_speed: 0
     luck: 0
-    damage: 10
+    damage: 0
   mainWeapon: {fileID: 0}
-  noOfTriggers: 0
-  nextShot: 2.19
+  nextShot: 0
 --- !u!114 &114000010733604688
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -209,17 +209,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1728d01ce3c30704293811f181843d56, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114000013085181230
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000011995876696}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f5305412978df94785d616db8e0ba72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!212 &212000010939786262

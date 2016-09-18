@@ -2,58 +2,47 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class RLObject : MonoBehaviour {
+public abstract class RLObject : MonoBehaviour {
 	public List<RLObject> objectsBehind = new List<RLObject> ();
-	public List<RLObject> objectsBefore = new List<RLObject> ();
+	public List<RLObject> objectsInFront = new List<RLObject> ();
 	private SpriteRenderer renderer;
+	public List<RLObject> waitList = new List<RLObject> ();
 
 	// Use this for initialization
 	void Start () {
-		renderer = GetComponent<SpriteRenderer> ();
-//		initializeObject ();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+		initialize ();
 	}
 
-//	protected abstract void initializeObject ();
+	protected virtual void initialize(){
+		renderer = GetComponent<SpriteRenderer> ();
+	}
 
 	public void addBehind(RLObject other){
-		if (!objectsBehind.Contains (other)) {
+		if (objectsInFront.Contains (other) && !waitList.Contains(other)) {
+			waitList.Add (other);
+		}
+		if (!objectsBehind.Contains (other) && !objectsInFront.Contains (other)) {
 			objectsBehind.Add (other);
 			if (other.getLayerNumber () >= this.getLayerNumber ()) {
-				int oldLayer = this.getLayerNumber ();
 				setLayerNumber (other.getLayerNumber () + 1);
-				updateLayersBefore (oldLayer);
 			}
-			other.addBefore (this);
+			other.addInFront (this);
 		}
 	}
 
 	public void removeBehind(RLObject other){
+		if (waitList.Contains(other)){
+			waitList.Remove (other);
+		}
 		if (objectsBehind.Contains (other)) {
 			objectsBehind.Remove (other);
-			if (other.getLayerNumber () == this.getLayerNumber () - 1) {
-				int oldLayer = this.getLayerNumber ();
-				setLayerNumber (calculateLayer ());
-				updateLayersBefore (oldLayer);
-			}
-			other.removeBefore (this);
+			updateLayerNumber ();
+			other.removeInFront (this);
 		}
 	}
 
-	private void updateLayersBefore(int oldLayer){
-		foreach (RLObject obj in objectsBefore) {
-			updateLayerNumber (oldLayer);
-		}
-	}
-
-	internal void updateLayerNumber(int oldLayer){
-		if (oldLayer == this.getLayerNumber () - 1) {
-			setLayerNumber (calculateLayer ());
-		}
+	internal void updateLayerNumber(){
+		setLayerNumber (calculateLayer ());
 	}
 
 	private int calculateLayer() {
@@ -71,21 +60,28 @@ public class RLObject : MonoBehaviour {
 
 	private void setLayerNumber(int layer){
 		renderer.sortingOrder = layer;
+		foreach (RLObject obj in objectsInFront) {
+			obj.updateLayerNumber ();
+		}
 	}
 
 	internal int getLayerNumber(){
 		return renderer.sortingOrder;
 	}
 
-	internal void addBefore(RLObject before){
-		if (!objectsBefore.Contains (before)) {
-			objectsBefore.Add (before);
+	internal void addInFront(RLObject other){
+		if (!objectsBehind.Contains(other) && !objectsInFront.Contains (other)) {
+			objectsInFront.Add (other);
 		}
 	}
 
-	internal void removeBefore(RLObject before) {
-		if (objectsBefore.Contains (before)) {
-			objectsBefore.Remove (before);
+	internal void removeInFront(RLObject other) {
+		if (objectsInFront.Contains (other)) {
+			objectsInFront.Remove (other);
+		}
+		if (waitList.Contains (other)) {
+			addBehind (other);
+			waitList.Remove (other);
 		}
 	}
 }

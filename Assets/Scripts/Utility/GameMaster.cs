@@ -15,7 +15,7 @@ public class GameMaster : MonoBehaviour {
 	public GameObject prefabBullets;
 	public Text UIHPText;
 	public GameObject playerObj;
-	PlayerBehaviour playerScript;
+	Player playerScript;
 	GameObject enemyObj;
 	GameObject weaponObj;
 	GameObject background;
@@ -48,7 +48,7 @@ public class GameMaster : MonoBehaviour {
 		checkComponents (); 
 		instantiateObjects (); 
 		setupCamera (); 
-		playerScript = playerObj.GetComponent<PlayerBehaviour> ();
+		playerScript = playerObj.GetComponent<Player> ();
 		playerScript.initializeObject ();
 		Debug.Log ("GameMaster has been started.");
 	}
@@ -62,7 +62,7 @@ public class GameMaster : MonoBehaviour {
 
 	void displayUI ()
 	{
-		UIHPText.text = "HP: " + playerObj.GetComponent<PlayerBehaviour>().stats.hp.ToString () + "\nRunes: " + "0/0/0/0";
+		UIHPText.text = "HP: " + playerObj.GetComponent<Player>().stats.hp.ToString () + "\nRunes: " + "0/0/0/0";
 	}
 
 	void setupCamera(){
@@ -106,7 +106,7 @@ public class GameMaster : MonoBehaviour {
 	}
 
 	void checkPlayerStatus(){
-		if (playerObj.GetComponent<PlayerBehaviour>().stats.hp <= 0) {
+		if (playerObj.GetComponent<Player>().stats.hp <= 0) {
 			Debug.Log ("You are dead.");
 			GameMaster.DeactivateObject (playerObj);
 		}
@@ -114,9 +114,9 @@ public class GameMaster : MonoBehaviour {
 
 	void handleKeyInputs(){
 		if (Input.GetKey (keymap.shiftKey)) {
-			playerObj.GetComponent<PlayerBehaviour>().stats.triggerEffect ();
+			playerObj.GetComponent<Player>().stats.triggerEffect ();
 		} else {
-			playerObj.GetComponent<PlayerBehaviour>().stats.untriggerEffect ();
+			playerObj.GetComponent<Player>().stats.untriggerEffect ();
 		}
 
 		if (Time.time > playerScript.nextShot) {
@@ -152,7 +152,7 @@ public class GameMaster : MonoBehaviour {
 
 		Vector3 direction = new Vector3 (Math.Sign (horizontal), Math.Sign (vertical), 0f); // Math.Sign(vertical));
 		direction *= Time.deltaTime * playerScript.stats.speed;
-		playerObj.GetComponent<PlayerBehaviour> ().moveBy (direction);
+		playerObj.GetComponent<Player> ().moveBy (direction);
 
 		if (vertical == 0 && horizontal == 0) {
 			playerScript.setAnimatorSpeed(0);
