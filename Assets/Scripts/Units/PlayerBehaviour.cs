@@ -17,7 +17,7 @@ public class PlayerBehaviour : MonoBehaviour {
 	enum Attribute {FLYING, INVISBLE};
 	Dictionary<Attribute, bool> dict = new Dictionary<Attribute, bool>();
 
-    void Start()
+    public void initializeObject()
     {
 		animator = GetComponent<Animator>();
 		stats = new UnitStats (this.gameObject, new List<AbstractEffect>{new SprintEffect()});
@@ -31,44 +31,12 @@ public class PlayerBehaviour : MonoBehaviour {
 			Debug.LogError (gameObject.name + " is lacking a Gun child.");
 		nextShot = Time.time;
 		checkForComponents ();
+		Debug.Log ("Player initialized correctly.");
 		setPlayerStats (stats);
     }
 
     void FixedUpdate()
     {
-		if (Input.GetKey (KeyCode.LeftShift) || Input.GetKey (KeyCode.RightShift)) {
-			stats.triggerEffect ();
-		} else {
-			stats.untriggerEffect ();
-		}
-
-		if (Input.GetButtonDown ("Fire1") && Time.time > nextShot) {
-			nextShot = Time.time + (1 / stats.attack_rate);
-			mainWeapon.Shoot (gameObject, Bullet.BulletType.BULLET_PLAYER, Bullet.BulletElement.BULLET_WATER);
-		}
-
-		float vertical = Input.GetAxis("Vertical");
-		float horizontal = Input.GetAxis("Horizontal");
-
-		Vector3 moveBy = new Vector3 (Math.Sign (horizontal), Math.Sign (vertical), 0f); // Math.Sign(vertical));
-		moveBy *= Time.deltaTime * stats.speed;
-		trans.Translate (moveBy);
-
-		if (vertical == 0 && horizontal == 0) {
-			animator.speed = 0;
-		} else {
-			animator.speed = stats.speed / UnitStats.BASE_SPEED;
-			if (vertical > 0) {
-				animator.Play ("PlayerMovementNorth");
-			} else if (vertical < 0) {
-				animator.Play ("PlayerMovementSouth");
-			} else if (horizontal > 0) {
-				animator.Play ("PlayerMovementEast");
-			} else if (horizontal < 0) {
-				animator.Play ("PlayerMovementWest");
-			}
-		}
-		//print ("Moving by " + moveBy.x.ToString () + "/" + moveBy.y.ToString () + "/" + moveBy.z.ToString ()+". DeltaTime: " + Time.deltaTime.ToString());
     }
 
 	void OnTriggerEnter2D(Collider2D other){
@@ -116,5 +84,17 @@ public class PlayerBehaviour : MonoBehaviour {
 		if (mainWeapon == null) {
 			Debug.LogError ("Missing Weapon component during PlayerBehaviour initialization");
 		}
+	}
+
+	public void moveBy(Vector3 vec) {
+		trans.Translate (vec);
+	}
+
+	public void setAnimatorSpeed(float speed){
+		animator.speed = speed;
+	}
+
+	public void playAnimation(string name){
+		animator.Play (name);
 	}
 }

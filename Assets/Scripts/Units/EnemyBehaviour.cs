@@ -27,7 +27,7 @@ public class EnemyBehaviour : MonoBehaviour {
 
 		float rnd2 = Random.value;
 		if (rnd2 > 0.99)
-			mainWeapon.Shoot (gameObject, Bullet.BulletType.BULLET_ENEMY, Bullet.BulletElement.BULLET_AIR);
+			mainWeapon.Shoot (gameObject, Bullet.BulletType.BULLET_ENEMY, Bullet.BulletElement.BULLET_AIR, Vector2.zero);
 
 		if (stats.hp <= 0) {
 			GameMaster.DeactivateObject (this.gameObject);
