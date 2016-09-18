@@ -16,6 +16,7 @@ public class Bullet : MonoBehaviour {
 		if (lifetime <= 0) {
 			GameMaster.Destroy (gameObject.GetComponent<Collider2D> ());
 			GameMaster.Destroy (gameObject.GetComponent<Animator> ());
+			GameMaster.Destroy (gameObject.GetComponent<Rigidbody2D> ());
 			//this.gameObject.GetComponent<SpriteRenderer>().sprite = 
 		}
 	}

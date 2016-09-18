@@ -5,8 +5,8 @@ using UnityEngine;
 public class UnitStats {
 	public const int 	BASE_HP = 100;
 	public const float 	BASE_SPEED = 0.7f;
-	public const float 	BASE_ATTACK_RATE = 1f;
-	public const float 	BASE_ATTACK_SPEED = 0.6f;
+	public const float 	BASE_ATTACK_RATE = 2f;
+	public const float 	BASE_ATTACK_SPEED = 3.5f;
 	public const float 	BASE_DAMAGE = 10;
 
 	GameObject playerObject;

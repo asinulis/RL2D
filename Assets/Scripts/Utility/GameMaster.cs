@@ -43,14 +43,14 @@ public class GameMaster : MonoBehaviour {
 	}
 
 	void Start(){ 
-		GameObject obj = Resources.Load<GameObject> ("Bullet");
+		//GameObject obj = Resources.Load<GameObject> ("Bullet");
 		keymap = new KeyMap();
 		checkComponents (); 
 		instantiateObjects (); 
 		setupCamera (); 
 		playerScript = playerObj.GetComponent<Player> ();
-		playerScript.initializeObject ();
-		Debug.Log ("GameMaster has been started.");
+		playerScript.initialize ();
+		Debug.Log ("GameMaster has finished.");
 	}
 
 	void FixedUpdate(){ checkPlayerStatus (); displayUI (); handleKeyInputs (); }
@@ -92,17 +92,17 @@ public class GameMaster : MonoBehaviour {
 
 	void instantiateObjects()
 	{
-		Debug.Log ("CheckComponents() successful. Instantiating objects.");
-		playerObj = Instantiate(prefabPlayers[0], Vector3.zero, Quaternion.identity, GameObject.Find("Units").transform) as GameObject;
-		Debug.Log ("Instantiated player instance.");
-		for (int i = 0; i < 1; i++) {
-			Vector2 pos = Random.insideUnitCircle;
-			Vector3 spawnPos = new Vector3 (pos.x, pos.y, 0);
-			enemyObj = Instantiate (prefabEnemys [0], spawnPos, Quaternion.identity, GameObject.Find("Units").transform) as GameObject;
-			Debug.Log ("Instantiated enemy instance.");
-		}
+		Debug.Log ("GameMaster successfully checked all components. Instantiating objects.");
 		background = Instantiate (prefabBackground, Vector3.zero, Quaternion.identity) as GameObject;
 		Debug.Log ("Instantiated background.");
+		playerObj = Instantiate(prefabPlayers[0], Vector3.zero, Quaternion.identity, GameObject.Find("Units").transform) as GameObject;
+		Debug.Log ("Instantiated player.");
+		for (int i = 0; i < 1; i++) {
+			Vector2 pos = Random.insideUnitCircle;
+			Vector3 spawnPos = new Vector3 (pos.x+i, pos.y+i, 0);
+			enemyObj = Instantiate (prefabEnemys [0], spawnPos, Quaternion.identity, GameObject.Find("Units").transform) as GameObject;
+		}
+		Debug.Log ("Instantiated enemies.");
 	}
 
 	void checkPlayerStatus(){

@@ -11,10 +11,18 @@ public abstract class RLObject : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		initialize ();
+		checkComponents ();
 	}
 
-	protected virtual void initialize(){
+	public virtual void initialize(){
 		renderer = GetComponent<SpriteRenderer> ();
+	}
+
+	protected virtual void checkComponents(){
+		if (renderer == null) {
+			string ex = "Sprite Renderer in RLObject " + gameObject.name + " could not be initialized.";
+			throw new InitializationException (ex);
+		}
 	}
 
 	public void addBehind(RLObject other){
