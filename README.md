@@ -3,9 +3,9 @@
 TODOs:
 ===
 1) Input - > GameMaster (done)<br>
-2) RLObject class + subclasses (done)<br>
+2) RLObject class + subclasses (partially done)<br>
 3) Bullet movement (done)<br>
-4) Dynamic layer ordering (partially done9<br>
+4) Dynamic layer ordering (partially done)<br>
 5) Stats<br>
 6) Effects and Unit attributes<br>
 7) Sprites & Animations<br>
