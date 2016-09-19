@@ -11,7 +11,7 @@ public class UnitStats {
 
 	GameObject playerObject;
 
-	public int hp;
+	public float hp;
 	public float speed;
 	public float attack_rate;
 	public float attack_speed;

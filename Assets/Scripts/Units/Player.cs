@@ -6,23 +6,24 @@ using System;
 
 public class Player : Unit {
 	public float nextShot;
+	public bool shooting;
+	public KeyMap keymap;
 	enum Attribute {FLYING, INVISBLE};
 	Dictionary<Attribute, bool> dict = new Dictionary<Attribute, bool>();
 
     public override void initialize()
     {
 		base.initialize ();
+		keymap = new KeyMap ();
 		nextShot = Time.time;
-		Debug.Log ("Player initialized correctly.");
     }
 
 	void OnTriggerEnter2D(Collider2D other){
 		if (other.gameObject.tag == "Bullet"  && other.transform.GetComponent<Bullet>().bulletType == Bullet.BulletType.BULLET_ENEMY) {
-			stats.hp -= 10;
+			Bullet bull = other.GetComponent<Bullet>();
+			stats.hp -= bull.damage;
 			GameObject.Destroy (other.gameObject);
-			//GameMaster.DeactivateCollider (other.gameObject.GetComponent<Collider2D> ());
-			//GameMaster.DeactivateObject (other.gameObject);
-			Debug.Log ("Unit " + this.gameObject.name + " has been hit.");
+			Debug.Log (gameObject.name + " has been hit by " + bull.shooter + " and has taken " + bull.damage + " damage.");
 		}
 	}
 

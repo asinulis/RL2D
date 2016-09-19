@@ -8,16 +8,28 @@ public class Bullet : MonoBehaviour {
 	public float lifetime;
 	public BulletType bulletType;
 	public BulletElement bulletElement;
+	public float damage;
+	public string shooter;
 
 	void Start() { lifetime = 8f + Random.value; }
 
 	void Update () {
 		lifetime -= Time.deltaTime;
-		if (lifetime <= 0) {
-			GameMaster.Destroy (gameObject.GetComponent<Collider2D> ());
-			GameMaster.Destroy (gameObject.GetComponent<Animator> ());
-			GameMaster.Destroy (gameObject.GetComponent<Rigidbody2D> ());
-			//this.gameObject.GetComponent<SpriteRenderer>().sprite = 
-		}
+		if (lifetime <= 0)	leaveShellCasingOnGround ();
+	}
+
+	void OnTriggerEnter2D(Collider2D other){
+		//if(!other.transform.parent.GetComponent<Unit>()) leaveShellCasingOnGround ();
+	}
+
+	void leaveShellCasingOnGround(){
+		Vector3 currPosition = transform.position;
+		GameObject shell = new GameObject (); shell.transform.position = currPosition; 
+		shell.transform.parent = GameMaster.GM.transform; 
+		shell.AddComponent<SpriteRenderer> (); 
+		shell.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite> ("Rocket_TX");
+		shell.GetComponent<SpriteRenderer> ().sortingLayerName = "Foreground";
+		shell.GetComponent<SpriteRenderer> ().sortingOrder = -2;
+		Destroy (this.gameObject);
 	}
 }

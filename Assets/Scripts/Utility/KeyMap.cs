@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
+[Serializable]
 public class KeyMap {
 	public KeyCode moveUp = KeyCode.W;
 	public KeyCode moveDown = KeyCode.S;
