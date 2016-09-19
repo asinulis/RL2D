@@ -105,15 +105,15 @@ public class GameMaster : MonoBehaviour {
 
 	void instantiateObjects(){
 		background = Instantiate (prefabBackground, Vector3.zero, Quaternion.identity) as GameObject;
-		this.gameObject.AddComponent<AudioSource> ();
+		/*this.gameObject.AddComponent<AudioSource> ();
 		this.gameObject.GetComponent<AudioSource> ().clip = Resources.Load<AudioClip> ("dark fallout");
-		gameObject.GetComponent<AudioSource> ().Play ();
+		gameObject.GetComponent<AudioSource> ().Play ();*/
 		UI = Instantiate (prefabUI);
 		UI.name = "UI";
 		playerObj.Add(Instantiate(prefabPlayers[0], Vector3.zero, Quaternion.identity, UnitFolder.transform) as GameObject);
 		playerObj [0].name = "Player 1";
 		//playerObj.Add(Instantiate(prefabPlayers[0], Vector3.zero, Quaternion.identity, GameObject.Find("Units").transform) as GameObject); playerObj [1].name = "Player 2";
-		for (int i = 0; i < 0; i++) {
+		for (int i = 0; i < 2; i++) {
 			Vector2 pos = Random.insideUnitCircle;
 			Vector3 spawnPos = new Vector3 (pos.x+Mathf.Min(i,10), pos.y+Mathf.Min(i,10), 0);
 			enemyObj = Instantiate (prefabEnemys [0], spawnPos, Quaternion.identity, UnitFolder.transform) as GameObject;
@@ -130,11 +130,13 @@ public class GameMaster : MonoBehaviour {
 	}
 
 	void displayUI (){
-//		UIHPText.GetComponentInChildren<Text>().text = "HP: " + playerObj.GetComponent<Player>().stats.hp.ToString () + "\nRunes: " + "0/0/0/0";
+		UI.transform.FindChild ("UIHPText").GetComponent<Text> ().text = "HP: " + playerScript.stats.hp.ToString ();//playerObj[0].GetComponent<Player>().stats.hp.ToString () + "\nRunes: " + "0/0/0/0";
 	}
 
 	void handleKeyInputs(GameObject player){
 		KeyMap keymap = player.GetComponent<Player> ().keymap;
+		Transform gunTransform = player.transform.FindChild ("Gun").transform;
+		SpriteRenderer gunRenderer = player.transform.FindChild ("Gun").GetComponent<SpriteRenderer> ();
 		if (Input.GetKey (keymap.shiftKey)) {
 			player.GetComponent<Player>().stats.triggerEffect ();
 		} else {
@@ -144,13 +146,35 @@ public class GameMaster : MonoBehaviour {
 		float vertical = 0;
 		float horizontal = 0;
 
-		Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition) - player.transform.position; 
+		Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition) - player.transform.position;
+		pos.z = 0;
 		float angle = Mathf.Atan2 (pos.x, pos.y) * Mathf.Rad2Deg;
 
-		if(-135 <= angle && angle < -45) playerScript.playAnimation ("PlayerMovementWest");
-		else if(-45 <= angle && angle < 45) playerScript.playAnimation ("PlayerMovementNorth");
-		else if(45 <= angle && angle < 135) playerScript.playAnimation ("PlayerMovementEast");
-		else playerScript.playAnimation ("PlayerMovementSouth");
+		if (-135 <= angle && angle < -45) {
+			playerScript.playAnimation ("PlayerMovementWest");
+			gunTransform.position = player.transform.position + new Vector3 (-0.215f, -0.207f);
+			gunRenderer.flipX = true;
+			gunRenderer.flipY = false;
+			gunRenderer.sprite = Resources.Load<Sprite> ("MGlr");
+		} else if (-45 <= angle && angle < 45) {
+			playerScript.playAnimation ("PlayerMovementNorth");
+			gunTransform.position = player.transform.position + new Vector3 (0.096f, -0.056f);
+			gunRenderer.flipX = false;
+			gunRenderer.flipY = true;
+			gunRenderer.sprite = Resources.Load<Sprite> ("MGud");
+		} else if (45 <= angle && angle < 135) {
+			playerScript.playAnimation ("PlayerMovementEast");
+			gunTransform.position = player.transform.position + new Vector3 (0.166f, -0.194f);
+			gunRenderer.flipX = false;
+			gunRenderer.flipY = false;
+			gunRenderer.sprite = Resources.Load<Sprite> ("MGlr");
+		} else { 
+			playerScript.playAnimation ("PlayerMovementSouth");
+			gunTransform.position = player.transform.position + new Vector3 (-0.099f, -0.272f);
+			gunRenderer.flipX = false;
+			gunRenderer.flipY = true;
+			gunRenderer.sprite = Resources.Load<Sprite> ("MGud");
+		}
 
 		if (Input.GetKey (keymap.moveDown)) vertical = -1;
 		else if (Input.GetKey (keymap.moveUp)) vertical = +1;
@@ -158,10 +182,10 @@ public class GameMaster : MonoBehaviour {
 		if (Input.GetKey (keymap.moveLeft)) horizontal = -1;
 		else if (Input.GetKey (keymap.moveRight)) horizontal = +1;
 
-		if (vertical == 0 && horizontal == 0) playerScript.setAnimatorSpeed(0);
+		if (vertical == 0 && horizontal == 0) playerScript.setAnimatorSpeed (0);
 		else playerScript.setAnimatorSpeed(playerScript.stats.speed / UnitStats.BASE_SPEED);
 
-		Vector3 direction = new Vector3 (Math.Sign (horizontal), Math.Sign (vertical), 0f); // Math.Sign(vertical));
+		Vector3 direction = new Vector3 (Math.Sign (horizontal), Math.Sign (vertical), 0f); 
 		direction *= Time.deltaTime * playerScript.stats.speed;
 		player.GetComponent<Player> ().moveBy (direction);
 
@@ -189,13 +213,28 @@ public class GameMaster : MonoBehaviour {
 		}
 	}
 
-	public GameObject createBullet(GameObject shooter){
-		bullets = Instantiate (prefabBullets, shooter.transform.position, Quaternion.identity, this.transform) as GameObject;//shooter.transform.FindChild("Gun").transform) as GameObject;
+	public GameObject createBullet(Vector3 position){
+		bullets = Instantiate (prefabBullets, position, Quaternion.identity, this.transform) as GameObject;//shooter.transform.FindChild("Gun").transform) as GameObject;
 		bullets.name = "Bullet";
 		return bullets;	
 	}
 
 	public Vector3 getPlayerPosition(string name){
 		return playerObj[0].transform.position;
+	}
+
+	public void handleCollision(Unit obj, Collider2D coll){
+		if (coll.gameObject.tag == "Bullet"  && coll.transform.GetComponent<Bullet>().bulletType == Bullet.BulletType.BULLET_PLAYER && obj.GetType() == typeof(Enemy) ) {
+			Bullet bull = coll.GetComponent<Bullet>();
+			obj.changeHP (-bull.damage);
+			GameObject.Destroy (coll.gameObject);
+			Debug.Log (obj.gameObject.name + " has been hit by " + bull.shooter + " and has taken " + bull.damage + " damage.");
+		}
+		else if (coll.gameObject.tag == "Bullet"  && coll.transform.GetComponent<Bullet>().bulletType == Bullet.BulletType.BULLET_ENEMY && obj.GetType() == typeof(Player)) {
+			Bullet bull = coll.GetComponent<Bullet>();
+			obj.changeHP(-bull.damage);
+			GameObject.Destroy (coll.gameObject);
+			Debug.Log (obj.gameObject.name + " has been hit by " + bull.shooter + " and has taken " + bull.damage + " damage.");
+		}
 	}
 }

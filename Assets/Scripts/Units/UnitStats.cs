@@ -3,11 +3,11 @@ using UnityEngine;
 
 [System.Serializable]
 public class UnitStats {
-	public const int 	BASE_HP = 100;
-	public const float 	BASE_SPEED = 0.7f;
+	public const int 	BASE_HP = 400;
+	public const float 	BASE_SPEED = 2f;
 	public const float 	BASE_ATTACK_RATE = 2f;
-	public const float 	BASE_ATTACK_SPEED = 3.5f;
-	public const float 	BASE_DAMAGE = 10;
+	public const float 	BASE_ATTACK_SPEED = 35f;
+	public const int 	BASE_DAMAGE = 10;
 
 	GameObject playerObject;
 
@@ -16,7 +16,7 @@ public class UnitStats {
 	public float attack_rate;
 	public float attack_speed;
 	public float luck;
-	public float damage;
+	public int damage;
 	List<AbstractEffect> triggerEffects = new List<AbstractEffect>();
 	AbstractEffect currentTriggerEffect;
 	List<AbstractEffect> activeEffects = new List<AbstractEffect> ();

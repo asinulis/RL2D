@@ -3,12 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 
 public abstract class Unit : RLObject {
-	protected Animator animator;
-	protected Rigidbody2D rb;
-	protected Transform trans;
-	public UnitStats stats;
-	public GameObject gun;
-	public Weapon mainWeapon;
+	public Animator animator { get; private set; }
+	public Rigidbody2D rb { get; private set; }
+	public Transform trans { get; private set; }
+	public UnitStats stats{ get; private set; }
+	public GameObject gun { get; private set; }
+	public Weapon mainWeapon { get; private set; }
 
 	public override void initialize(){
 		base.initialize ();
@@ -45,7 +45,11 @@ public abstract class Unit : RLObject {
 		}
 	}
 
-	public void setUnitStats(UnitStats stats){
+	void setUnitStats(UnitStats stats){
 		this.stats = stats;
+	}
+
+	public void changeHP(int diff){
+		stats.hp += diff;
 	}
 }

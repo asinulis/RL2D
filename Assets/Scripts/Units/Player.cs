@@ -19,12 +19,7 @@ public class Player : Unit {
     }
 
 	void OnTriggerEnter2D(Collider2D other){
-		if (other.gameObject.tag == "Bullet"  && other.transform.GetComponent<Bullet>().bulletType == Bullet.BulletType.BULLET_ENEMY) {
-			Bullet bull = other.GetComponent<Bullet>();
-			stats.hp -= bull.damage;
-			GameObject.Destroy (other.gameObject);
-			Debug.Log (gameObject.name + " has been hit by " + bull.shooter + " and has taken " + bull.damage + " damage.");
-		}
+		GameMaster.GM.handleCollision (this, other);
 	}
 
 	public void moveBy(Vector3 vec) {
