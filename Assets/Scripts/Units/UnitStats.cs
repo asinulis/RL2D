@@ -13,9 +13,10 @@ public class UnitStats {
 
 	public float hp;
 	public float speed;
-	public float attack_rate;
-	public float attack_speed;
+	public float attackRate;
+	public float attackSpeed;
 	public float luck;
+	public float accuracy;
 	public int damage;
 	List<AbstractEffect> triggerEffects = new List<AbstractEffect>();
 	AbstractEffect currentTriggerEffect;
@@ -57,8 +58,8 @@ public class UnitStats {
 	public void updateStats(){
 		hp = BASE_HP;
 		speed = BASE_SPEED;
-		attack_rate = BASE_ATTACK_RATE;
-		attack_speed = BASE_ATTACK_SPEED;
+		attackRate = BASE_ATTACK_RATE;
+		attackSpeed = BASE_ATTACK_SPEED;
 		damage = BASE_DAMAGE;
 		foreach (AbstractEffect effect in activeEffects) {
 			effect.apply (this, playerObject);

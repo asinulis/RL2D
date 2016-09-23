@@ -2,26 +2,23 @@
 using System.Collections;
 using System.Collections.Generic;
 
+/*
+ * Abstract class, encapsulating the derived classes Unit (i.e. Player, Enemy, Companion/Orbital), NPC (e.g. shopkeeper), hitables (e.g. bombs, traps) and environment.
+ * Only has an associated SpriteRenderer. Handles the dynamic layer ordering.
+*/
+
 public abstract class RLObject : MonoBehaviour {
 	public List<RLObject> objectsBehind = new List<RLObject> ();
 	public List<RLObject> objectsInFront = new List<RLObject> ();
-	private SpriteRenderer renderer;
+	public SpriteRenderer sprRenderer;
 	public List<RLObject> waitList = new List<RLObject> ();
 
-	// Use this for initialization
-	void Start () {
-		initialize ();
-		checkComponents ();
-	}
-
-	public virtual void initialize(){
-		renderer = GetComponent<SpriteRenderer> ();
-	}
-
-	protected virtual void checkComponents(){
-		if (renderer == null) {
-			string ex = "Sprite Renderer in RLObject " + gameObject.name + " could not be initialized.";
-			throw new InitializationException (ex);
+	public virtual void Start () {
+		try{
+			sprRenderer = GetComponent<SpriteRenderer> ();
+		}
+		catch (System.NullReferenceException) {
+			throw new InitializationException ("Sprite Renderer in RLObject " + gameObject.name + " could not be initialized.");
 		}
 	}
 
@@ -67,14 +64,14 @@ public abstract class RLObject : MonoBehaviour {
 	}
 
 	private void setLayerNumber(int layer){
-		renderer.sortingOrder = layer;
+		sprRenderer.sortingOrder = layer;
 		foreach (RLObject obj in objectsInFront) {
 			obj.updateLayerNumber ();
 		}
 	}
 
 	internal int getLayerNumber(){
-		return renderer.sortingOrder;
+		return sprRenderer.sortingOrder;
 	}
 
 	internal void addInFront(RLObject other){

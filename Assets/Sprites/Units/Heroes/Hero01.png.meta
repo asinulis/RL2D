@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: ae03ce52a574678489571933bc62bdd8
-timeCreated: 1474047215
+timeCreated: 1474637683
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -74,6 +74,42 @@ TextureImporter:
     21300134: hero_professor_33
     21300136: hero_professor_34
     21300138: hero_professor_35
+    21300140: Hero01_0
+    21300142: Hero01_1
+    21300144: Hero01_2
+    21300146: Hero01_3
+    21300148: Hero01_4
+    21300150: Hero01_5
+    21300152: Hero01_6
+    21300154: Hero01_7
+    21300156: Hero01_8
+    21300158: Hero01_9
+    21300160: Hero01_10
+    21300162: Hero01_11
+    21300164: Hero01_12
+    21300166: Hero01_13
+    21300168: Hero01_14
+    21300170: Hero01_15
+    21300172: Hero01_16
+    21300174: Hero01_17
+    21300176: Hero01_18
+    21300178: Hero01_19
+    21300180: Hero01_20
+    21300182: Hero01_21
+    21300184: Hero01_22
+    21300186: Hero01_23
+    21300188: Hero01_24
+    21300190: Hero01_25
+    21300192: Hero01_26
+    21300194: Hero01_27
+    21300196: Hero01_28
+    21300198: Hero01_29
+    21300200: Hero01_30
+    21300202: Hero01_31
+    21300204: Hero01_32
+    21300206: Hero01_33
+    21300208: Hero01_34
+    21300210: Hero01_35
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -123,7 +159,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: hero_professor_0
+      name: Hero01_0
       rect:
         serializedVersion: 2
         x: 0
@@ -131,12 +167,12 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      tessellationDetail: 0
+      tessellationDetail: -1
     - serializedVersion: 2
-      name: North1
+      name: Hero01_1
       rect:
         serializedVersion: 2
         x: 64
@@ -144,12 +180,12 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      tessellationDetail: 0
+      tessellationDetail: -1
     - serializedVersion: 2
-      name: North2
+      name: Hero01_2
       rect:
         serializedVersion: 2
         x: 128
@@ -157,12 +193,12 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      tessellationDetail: 0
+      tessellationDetail: -1
     - serializedVersion: 2
-      name: North3
+      name: Hero01_3
       rect:
         serializedVersion: 2
         x: 192
@@ -170,12 +206,12 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      tessellationDetail: 0
+      tessellationDetail: -1
     - serializedVersion: 2
-      name: North4
+      name: Hero01_4
       rect:
         serializedVersion: 2
         x: 256
@@ -183,12 +219,12 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      tessellationDetail: 0
+      tessellationDetail: -1
     - serializedVersion: 2
-      name: North5
+      name: Hero01_5
       rect:
         serializedVersion: 2
         x: 320
@@ -196,12 +232,12 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      tessellationDetail: 0
+      tessellationDetail: -1
     - serializedVersion: 2
-      name: North6
+      name: Hero01_6
       rect:
         serializedVersion: 2
         x: 384
@@ -209,12 +245,12 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      tessellationDetail: 0
+      tessellationDetail: -1
     - serializedVersion: 2
-      name: North7
+      name: Hero01_7
       rect:
         serializedVersion: 2
         x: 448
@@ -222,12 +258,12 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      tessellationDetail: 0
+      tessellationDetail: -1
     - serializedVersion: 2
-      name: North8
+      name: Hero01_8
       rect:
         serializedVersion: 2
         x: 512
@@ -235,12 +271,12 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      tessellationDetail: 0
+      tessellationDetail: -1
     - serializedVersion: 2
-      name: West0
+      name: Hero01_9
       rect:
         serializedVersion: 2
         x: 0
@@ -248,12 +284,12 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      tessellationDetail: 0
+      tessellationDetail: -1
     - serializedVersion: 2
-      name: West1
+      name: Hero01_10
       rect:
         serializedVersion: 2
         x: 64
@@ -261,12 +297,12 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      tessellationDetail: 0
+      tessellationDetail: -1
     - serializedVersion: 2
-      name: West2
+      name: Hero01_11
       rect:
         serializedVersion: 2
         x: 128
@@ -274,12 +310,12 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      tessellationDetail: 0
+      tessellationDetail: -1
     - serializedVersion: 2
-      name: West3
+      name: Hero01_12
       rect:
         serializedVersion: 2
         x: 192
@@ -287,12 +323,12 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      tessellationDetail: 0
+      tessellationDetail: -1
     - serializedVersion: 2
-      name: West4
+      name: Hero01_13
       rect:
         serializedVersion: 2
         x: 256
@@ -300,12 +336,12 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      tessellationDetail: 0
+      tessellationDetail: -1
     - serializedVersion: 2
-      name: West5
+      name: Hero01_14
       rect:
         serializedVersion: 2
         x: 320
@@ -313,12 +349,12 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      tessellationDetail: 0
+      tessellationDetail: -1
     - serializedVersion: 2
-      name: West6
+      name: Hero01_15
       rect:
         serializedVersion: 2
         x: 384
@@ -326,12 +362,12 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      tessellationDetail: 0
+      tessellationDetail: -1
     - serializedVersion: 2
-      name: West7
+      name: Hero01_16
       rect:
         serializedVersion: 2
         x: 448
@@ -339,12 +375,12 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      tessellationDetail: 0
+      tessellationDetail: -1
     - serializedVersion: 2
-      name: West8
+      name: Hero01_17
       rect:
         serializedVersion: 2
         x: 512
@@ -352,12 +388,12 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      tessellationDetail: 0
+      tessellationDetail: -1
     - serializedVersion: 2
-      name: South0
+      name: Hero01_18
       rect:
         serializedVersion: 2
         x: 0
@@ -368,9 +404,9 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      tessellationDetail: 0
+      tessellationDetail: -1
     - serializedVersion: 2
-      name: South1
+      name: Hero01_19
       rect:
         serializedVersion: 2
         x: 64
@@ -378,12 +414,12 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      tessellationDetail: 0
+      tessellationDetail: -1
     - serializedVersion: 2
-      name: South2
+      name: Hero01_20
       rect:
         serializedVersion: 2
         x: 128
@@ -391,12 +427,12 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      tessellationDetail: 0
+      tessellationDetail: -1
     - serializedVersion: 2
-      name: South3
+      name: Hero01_21
       rect:
         serializedVersion: 2
         x: 192
@@ -404,12 +440,12 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      tessellationDetail: 0
+      tessellationDetail: -1
     - serializedVersion: 2
-      name: South4
+      name: Hero01_22
       rect:
         serializedVersion: 2
         x: 256
@@ -417,12 +453,12 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      tessellationDetail: 0
+      tessellationDetail: -1
     - serializedVersion: 2
-      name: South5
+      name: Hero01_23
       rect:
         serializedVersion: 2
         x: 320
@@ -430,12 +466,12 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      tessellationDetail: 0
+      tessellationDetail: -1
     - serializedVersion: 2
-      name: South6
+      name: Hero01_24
       rect:
         serializedVersion: 2
         x: 384
@@ -443,12 +479,12 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      tessellationDetail: 0
+      tessellationDetail: -1
     - serializedVersion: 2
-      name: South7
+      name: Hero01_25
       rect:
         serializedVersion: 2
         x: 448
@@ -456,12 +492,12 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      tessellationDetail: 0
+      tessellationDetail: -1
     - serializedVersion: 2
-      name: South8
+      name: Hero01_26
       rect:
         serializedVersion: 2
         x: 512
@@ -469,12 +505,12 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      tessellationDetail: 0
+      tessellationDetail: -1
     - serializedVersion: 2
-      name: East0
+      name: Hero01_27
       rect:
         serializedVersion: 2
         x: 0
@@ -482,12 +518,12 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      tessellationDetail: 0
+      tessellationDetail: -1
     - serializedVersion: 2
-      name: East1
+      name: Hero01_28
       rect:
         serializedVersion: 2
         x: 64
@@ -495,12 +531,12 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      tessellationDetail: 0
+      tessellationDetail: -1
     - serializedVersion: 2
-      name: East2
+      name: Hero01_29
       rect:
         serializedVersion: 2
         x: 128
@@ -508,12 +544,12 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      tessellationDetail: 0
+      tessellationDetail: -1
     - serializedVersion: 2
-      name: East3
+      name: Hero01_30
       rect:
         serializedVersion: 2
         x: 192
@@ -521,12 +557,12 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      tessellationDetail: 0
+      tessellationDetail: -1
     - serializedVersion: 2
-      name: East4
+      name: Hero01_31
       rect:
         serializedVersion: 2
         x: 256
@@ -534,12 +570,12 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      tessellationDetail: 0
+      tessellationDetail: -1
     - serializedVersion: 2
-      name: hero_professor_32
+      name: Hero01_32
       rect:
         serializedVersion: 2
         x: 320
@@ -547,12 +583,12 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      tessellationDetail: 0
+      tessellationDetail: -1
     - serializedVersion: 2
-      name: hero_professor_33
+      name: Hero01_33
       rect:
         serializedVersion: 2
         x: 384
@@ -563,9 +599,9 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      tessellationDetail: 0
+      tessellationDetail: -1
     - serializedVersion: 2
-      name: hero_professor_34
+      name: Hero01_34
       rect:
         serializedVersion: 2
         x: 448
@@ -576,9 +612,9 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      tessellationDetail: 0
+      tessellationDetail: -1
     - serializedVersion: 2
-      name: hero_professor_35
+      name: Hero01_35
       rect:
         serializedVersion: 2
         x: 512
@@ -589,7 +625,7 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      tessellationDetail: 0
+      tessellationDetail: -1
     outline: []
   spritePackingTag: 
   userData: 

@@ -4,8 +4,8 @@ using System.Collections;
 public class CameraControl : MonoBehaviour 
 {
 	public Transform target;
-	public float damping = 1f;
-	public float lookAheadFactor = 3;
+	public float damping = 0.2f;
+	public float lookAheadFactor = 0f;
 	public float lookAheadReturnSpeed = 0.5f;
 	public float lookAheadMoveThreshold = 1f;
 

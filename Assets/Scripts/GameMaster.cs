@@ -5,8 +5,28 @@ using System.Collections.Generic;
 using System;
 using Random = UnityEngine.Random;
 
+public enum Elements { ELEMENT_EARTH, ELEMENT_WATER, ELEMENT_AIR, ELEMENT_FIRE};
+static class BulletElementMethods {
+	public static string giveName(this Elements elem)
+	{
+		switch (elem) {
+		case Elements.ELEMENT_AIR:
+			return "Air";
+		case Elements.ELEMENT_EARTH:
+			return "Earth";
+		case Elements.ELEMENT_FIRE:
+			return "Fire";
+		case Elements.ELEMENT_WATER:
+			return "Water";
+		default:
+			return "Error";
+		}
+	}
+}
+
 public class GameMaster : MonoBehaviour {
 	public static GameMaster GM;
+	public static bool logMessages = false;
 
 	// (Lists for) prefabs
 	List<GameObject> prefabPlayers;
@@ -15,215 +35,253 @@ public class GameMaster : MonoBehaviour {
 	GameObject prefabBackground;
 	GameObject prefabBullets;
 	GameObject prefabUI;
+	GameObject UnitHolder;
+	Sprite[] headsprites;
+
+	public int noOfPlayers;
+	public int noOfEnemies;
 
 	// Player
-	public List<GameObject> playerObj;
-	public Player playerScript;
+	List<GameObject> playerObj;			// TODO: can only be public if one wants to use the procedure given below (playerObj.add(Instantiate(...)) - why?
+	Player playerScript;
 
 	// GameObjects for various objects that are instantiated
-	public GameObject UnitFolder;
-	GameObject enemyObj;
+	List<GameObject> enemyObj;			// TODO: can only be public if one wants to use the procedure given below (playerObj.add(Instantiate(...)) - why?
 	GameObject weaponObj;
 	GameObject background;
 	GameObject bullets;
 	GameObject UI;
 	GameObject Audio;
 
-	public static void DeactivateObject(GameObject obj){
-		// test description
-		obj.SetActive (false);
-	}
-
-	public static void ActivateObject(GameObject obj){
-		obj.SetActive (true);
-	}
-
-	public static void DeactivateCollider(Collider2D obj){
-		obj.enabled = false;
-	}
-
 	void Awake(){
+		try{
 		DontDestroyOnLoad (this);
-		if (GM != null)
-			GameObject.Destroy (GM);
-		else
-			GM = this;
+		GM = this;
 
 		prefabPlayers = new List<GameObject> ();
 		prefabEnemys = new List<GameObject> ();
 		prefabWeapons = new List<GameObject> ();
 
-		if (GameObject.Find ("Units") == null) {
-			UnitFolder = new GameObject ();
-			UnitFolder.name = "Units";
-		} else {
-			UnitFolder = GameObject.Find("Units");
+		UnitHolder = GameObject.Find ("Units");
+		if (UnitHolder == null)		UnitHolder = new GameObject ("Units");
+
+		if(logMessages) Debug.Log ("GM: Loading resources"); 		
+		loadResources (); 			
+		if(logMessages) Debug.Log ("GM: Resources loaded.");
+		if(logMessages) Debug.Log ("GM: Instantiating objects.");	
+		instantiateObjects ();		
+		if(logMessages) Debug.Log ("GM: Objects instantiated.");
+
+		if (playerObj.Count > 0) {
+			if(logMessages) Debug.Log ("GM: Setting up camera.");
+			setupCamera (playerObj [0]);
+			if(logMessages) Debug.Log ("GM: Camera set up.");
+			playerScript = playerObj[0].GetComponent<Player> ();
 		}
-
-		Debug.Log ("GM: Loading resources"); 		loadResources (); 			Debug.Log ("GM: Resources loaded.");
-		Debug.Log ("GM: Checking components.");		checkComponents (); 		Debug.Log ("GM: Components checked.");
-		Debug.Log ("GM: Instantiating objects.");	instantiateObjects ();		Debug.Log ("GM: Objects instantiated.");
-		Debug.Log ("GM: Setting up camera.");		setupCamera (playerObj[0]); Debug.Log ("GM: Camera set up.");
-
-		playerScript = playerObj[0].GetComponent<Player> ();
-		playerScript.initialize ();
-		Debug.Log ("GM: Finished starting process.");
+		else { UI.SetActive(false); }
+			
+		if(logMessages) Debug.Log ("GM: Finished starting process.");
+		}
+		catch(System.NullReferenceException) {
+			if (GM == null)
+				throw new InitializationException ("GM: GM has no instance.");
+			if (prefabPlayers.Count == 0) {
+				throw new InitializationException("GM: Player prefabs are not set.");
+			} else if (prefabEnemys.Count == 0) {
+				throw new InitializationException("GM: Enemy prefabs are not set.");
+			} else if (prefabWeapons.Count == 0) {
+				throw new InitializationException("GM: Weapon prefabs are not set.");
+			} else if (prefabUI == null) {
+				throw new InitializationException("GM: UI prefab is not set.");
+			} else if (prefabBackground == null) {
+				throw new InitializationException("GM: Background prefab are not set.");
+			} else if (prefabBullets == null) {
+				throw new InitializationException("GM: Bullet prefabs are not set.");
+			}
+		}
 	}
 
-	void FixedUpdate(){ displayUI (); foreach (GameObject player in playerObj) {checkPlayerStatus (player); handleKeyInputs (player);} }
+	void FixedUpdate(){ 
+		if (playerObj != null) {
+			displayUI (); 
+			foreach (GameObject player in playerObj) {
+				checkPlayerStatus (player);
+				handleKeyInputs (player);
+			}
+		}
+	}
 
-	void loadResources(){
+	internal void loadResources(){
 		prefabBackground = Resources.Load<GameObject> ("Background");
 		prefabPlayers.Add(Resources.Load<GameObject>("Player"));
 		prefabEnemys.Add(Resources.Load<GameObject>("Enemy"));
 		prefabWeapons.Add (Resources.Load<GameObject>("Weapon"));
 		prefabBullets = Resources.Load<GameObject> ("Bullet");
 		prefabUI = Resources.Load<GameObject> ("UI");
+		headsprites = Resources.LoadAll<Sprite> ("Shami_head");
 	}
 
-	void setupCamera(GameObject follow){
+	internal void setupCamera(GameObject follow){
 		Camera maincam = Camera.main;
 		maincam.gameObject.AddComponent<CameraControl> ();
 		maincam.gameObject.GetComponent<CameraControl> ().target = follow.transform;
 	}
 
-	void checkComponents(){
-		if (prefabPlayers.Count == 0) {
-			throw new InitializationException("GM: Player prefabs are not set.");
-		} else if (prefabEnemys.Count == 0) {
-			throw new InitializationException("GM: Enemy prefabs are not set.");
-		} else if (prefabWeapons.Count == 0) {
-			throw new InitializationException("GM: Weapon prefabs are not set.");
-		} else if (prefabUI == null) {
-			throw new InitializationException("GM: UI prefab is not set.");
-		} else if (prefabBackground == null) {
-			throw new InitializationException("GM: Background prefab are not set.");
-		} else if (prefabBullets == null) {
-			throw new InitializationException("GM: Bullet prefabs are not set.");
-		}
-	}
-
-	void instantiateObjects(){
+	internal void instantiateObjects(){
+		playerObj = new List<GameObject>();
+		enemyObj = new List<GameObject> ();
 		background = Instantiate (prefabBackground, Vector3.zero, Quaternion.identity) as GameObject;
-		/*this.gameObject.AddComponent<AudioSource> ();
+		background.name = "Background and boundary";
+		this.gameObject.AddComponent<AudioSource> ();
 		this.gameObject.GetComponent<AudioSource> ().clip = Resources.Load<AudioClip> ("dark fallout");
-		gameObject.GetComponent<AudioSource> ().Play ();*/
+		gameObject.GetComponent<AudioSource> ().Play ();
 		UI = Instantiate (prefabUI);
 		UI.name = "UI";
-		playerObj.Add(Instantiate(prefabPlayers[0], Vector3.zero, Quaternion.identity, UnitFolder.transform) as GameObject);
-		playerObj [0].name = "Player 1";
-		//playerObj.Add(Instantiate(prefabPlayers[0], Vector3.zero, Quaternion.identity, GameObject.Find("Units").transform) as GameObject); playerObj [1].name = "Player 2";
-		for (int i = 0; i < 2; i++) {
+		for (int i = 0; i < noOfPlayers; i++) {
+			playerObj.Add (Instantiate (prefabPlayers [0], Vector3.zero, Quaternion.identity, UnitHolder.transform) as GameObject);
+			playerObj [i].name = "Player" + (i + 1).ToString ();
+		}
+		for (int i = 0; i < noOfEnemies; i++) {
 			Vector2 pos = Random.insideUnitCircle;
 			Vector3 spawnPos = new Vector3 (pos.x+Mathf.Min(i,10), pos.y+Mathf.Min(i,10), 0);
-			enemyObj = Instantiate (prefabEnemys [0], spawnPos, Quaternion.identity, UnitFolder.transform) as GameObject;
-			enemyObj.name = "Enemy" + i.ToString();
+			enemyObj.Add(Instantiate (prefabEnemys [0], spawnPos, Quaternion.identity, UnitHolder.transform) as GameObject);
+			enemyObj[i].name = "Enemy" + (i+1).ToString();
 		}
 	}
 
-	void checkPlayerStatus(GameObject player){
+	IEnumerator checkPlayerStatus(GameObject player){
 		if (player.GetComponent<Player>().stats.hp <= 0) {
 			Debug.LogError ("You are dead.");
-			GameMaster.DeactivateObject (player);
-			Application.CancelQuit ();
+			player.gameObject.SetActive (false);
+			yield return new WaitForSecondsRealtime (2f);
+			Application.Quit ();
 		}
 	}
 
-	void displayUI (){
-		UI.transform.FindChild ("UIHPText").GetComponent<Text> ().text = "HP: " + playerScript.stats.hp.ToString ();//playerObj[0].GetComponent<Player>().stats.hp.ToString () + "\nRunes: " + "0/0/0/0";
+	internal void displayUI (){
+		UI.transform.FindChild ("UIHPText").GetComponent<Text> ().text = "HP: " + playerScript.stats.hp.ToString ();
+		UI.transform.FindChild ("UIWeapon").GetComponent<Text> ().text = "Weapon: " + playerObj [0].gameObject.GetComponent<Unit> ().mainWeapon.element.giveName () + "\nAmmunition: " + playerObj [0].gameObject.GetComponent<Unit> ().mainWeapon.ammunition + "\nDamage: " + playerObj [0].gameObject.GetComponent<Unit> ().mainWeapon.damage; 
 	}
 
-	void handleKeyInputs(GameObject player){
-		KeyMap keymap = player.GetComponent<Player> ().keymap;
-		Transform gunTransform = player.transform.FindChild ("Gun").transform;
-		SpriteRenderer gunRenderer = player.transform.FindChild ("Gun").GetComponent<SpriteRenderer> ();
-		if (Input.GetKey (keymap.shiftKey)) {
-			player.GetComponent<Player>().stats.triggerEffect ();
-		} else {
-			player.GetComponent<Player>().stats.untriggerEffect ();
-		}
+	internal void handleKeyInputs(GameObject player){
+		GameObject gun	 			= null;
+		KeyMap keymap 				= null;
+		SpriteRenderer headSprite 	= null;
+		SpriteRenderer gunSprite 	= null;
 
-		float vertical = 0;
-		float horizontal = 0;
+		try{
+			gun 		= player.transform.FindChild ("Gun").gameObject;
+			keymap 		= player.GetComponent<Player> ().keymap;
+			headSprite 	= player.transform.FindChild ("Head").GetComponent<SpriteRenderer> ();
+			gunSprite 	= player.transform.FindChild ("Gun").GetComponent<SpriteRenderer> ();
 
-		Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition) - player.transform.position;
-		pos.z = 0;
-		float angle = Mathf.Atan2 (pos.x, pos.y) * Mathf.Rad2Deg;
-
-		if (-135 <= angle && angle < -45) {
-			playerScript.playAnimation ("PlayerMovementWest");
-			gunTransform.position = player.transform.position + new Vector3 (-0.215f, -0.207f);
-			gunRenderer.flipX = true;
-			gunRenderer.flipY = false;
-			gunRenderer.sprite = Resources.Load<Sprite> ("MGlr");
-		} else if (-45 <= angle && angle < 45) {
-			playerScript.playAnimation ("PlayerMovementNorth");
-			gunTransform.position = player.transform.position + new Vector3 (0.096f, -0.056f);
-			gunRenderer.flipX = false;
-			gunRenderer.flipY = true;
-			gunRenderer.sprite = Resources.Load<Sprite> ("MGud");
-		} else if (45 <= angle && angle < 135) {
-			playerScript.playAnimation ("PlayerMovementEast");
-			gunTransform.position = player.transform.position + new Vector3 (0.166f, -0.194f);
-			gunRenderer.flipX = false;
-			gunRenderer.flipY = false;
-			gunRenderer.sprite = Resources.Load<Sprite> ("MGlr");
-		} else { 
-			playerScript.playAnimation ("PlayerMovementSouth");
-			gunTransform.position = player.transform.position + new Vector3 (-0.099f, -0.272f);
-			gunRenderer.flipX = false;
-			gunRenderer.flipY = true;
-			gunRenderer.sprite = Resources.Load<Sprite> ("MGud");
-		}
-
-		if (Input.GetKey (keymap.moveDown)) vertical = -1;
-		else if (Input.GetKey (keymap.moveUp)) vertical = +1;
-
-		if (Input.GetKey (keymap.moveLeft)) horizontal = -1;
-		else if (Input.GetKey (keymap.moveRight)) horizontal = +1;
-
-		if (vertical == 0 && horizontal == 0) playerScript.setAnimatorSpeed (0);
-		else playerScript.setAnimatorSpeed(playerScript.stats.speed / UnitStats.BASE_SPEED);
-
-		Vector3 direction = new Vector3 (Math.Sign (horizontal), Math.Sign (vertical), 0f); 
-		direction *= Time.deltaTime * playerScript.stats.speed;
-		player.GetComponent<Player> ().moveBy (direction);
-
-		if(Time.time > playerScript.nextShot)
-		{
-			if (Input.GetMouseButton(0)) {
-				playerScript.nextShot = Time.time + (1 / playerScript.stats.attack_rate);
-				playerScript.mainWeapon.Shoot (player, Bullet.BulletType.BULLET_PLAYER, Bullet.BulletElement.BULLET_WATER, pos.normalized);
+			if (Input.GetKey (keymap.shiftKey)) {
+				player.GetComponent<Player>().stats.triggerEffect ();
+			} else {
+				player.GetComponent<Player>().stats.untriggerEffect ();
 			}
-			/*
-			if (Input.GetKey (keymap.shootUp)) {
-				playerScript.nextShot = Time.time + (1 / playerScript.stats.attack_rate);
-				playerScript.mainWeapon.Shoot (player, Bullet.BulletType.BULLET_PLAYER, Bullet.BulletElement.BULLET_WATER, Vector2.up);
-			} else if (Input.GetKey (keymap.shootDown)) {
-				playerScript.nextShot = Time.time + (1 / playerScript.stats.attack_rate);
-				playerScript.mainWeapon.Shoot (player, Bullet.BulletType.BULLET_PLAYER, Bullet.BulletElement.BULLET_WATER, Vector2.down);
-			} else if (Input.GetKey (keymap.shootLeft)) {
-				playerScript.nextShot = Time.time + (1 / playerScript.stats.attack_rate);
-				playerScript.mainWeapon.Shoot (player, Bullet.BulletType.BULLET_PLAYER, Bullet.BulletElement.BULLET_WATER, Vector2.left);
-			} else if (Input.GetKey (keymap.shootRight)) {
-				playerScript.nextShot = Time.time + (1 / playerScript.stats.attack_rate);
-				playerScript.mainWeapon.Shoot (player, Bullet.BulletType.BULLET_PLAYER, Bullet.BulletElement.BULLET_WATER, Vector2.right);
+
+			if (Input.GetAxis ("Mouse ScrollWheel") < 0) {
+				player.GetComponent<Player> ().mainWeapon.changeWeapon (false);
 			}
-			*/
+			else if (Input.GetAxis ("Mouse ScrollWheel") > 0) {
+				player.GetComponent<Player> ().mainWeapon.changeWeapon (true);
+			}
+
+			float vertical = 0;
+			float horizontal = 0;
+			Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition) - player.transform.position;
+			pos.z = 0;
+			float angle = Mathf.Atan2 (pos.x, pos.y) * Mathf.Rad2Deg;
+
+			gun.transform.eulerAngles = new Vector3 (0, 0, -angle);
+
+			if (-180 <= angle && angle < -135)
+				headSprite.sprite = headsprites [0];
+			else if (-135 <= angle && angle < -90)
+				headSprite.sprite = headsprites [1];
+			else if (-90 <= angle && angle < -45)
+				headSprite.sprite = headsprites [2];
+			else if (-45 <= angle && angle < 0)
+				headSprite.sprite = headsprites [3];
+			else if (0 <= angle && angle < 45)
+				headSprite.sprite = headsprites [4];
+			else if (45 <= angle && angle < 90)
+				headSprite.sprite = headsprites [5];
+			else if (90 <= angle && angle < 135)
+				headSprite.sprite = headsprites [6];
+			else if (135 <= angle && angle < 180)
+				headSprite.sprite = headsprites [7];
+			
+			if (-135 <= angle && angle < -45) {			playerScript.animator.Play ("PlayerMovementWest");
+			} else if (-45 <= angle && angle < 45) {	playerScript.animator.Play ("PlayerMovementNorth");
+			} else if (45 <= angle && angle < 135) {	playerScript.animator.Play ("PlayerMovementEast");
+			} else { 									playerScript.animator.Play ("PlayerMovementSouth");		}
+
+			if (Input.GetKey (keymap.moveDown)) vertical = -1;
+			else if (Input.GetKey (keymap.moveUp)) vertical = +1;
+
+			if (Input.GetKey (keymap.moveLeft)) horizontal = -1;
+			else if (Input.GetKey (keymap.moveRight)) horizontal = +1;
+
+
+			if (vertical == 0 && horizontal == 0)
+				playerScript.animator.StartPlayback (); 
+			else playerScript.animator.StopPlayback(); 
+
+			Vector3 direction = new Vector3 (Math.Sign (horizontal), Math.Sign (vertical), 0f); 
+			direction *= Time.deltaTime * playerScript.stats.speed;
+			player.GetComponent<Player> ().moveBy (direction);
+
+			if(Time.time > playerScript.nextShot && Input.GetMouseButton(0))
+			{
+				playerScript.setShotTime (Time.time + (1 / playerScript.stats.attackRate));
+				playerScript.mainWeapon.Shoot (player, Bullet.BulletType.BULLET_PLAYER, pos.normalized);
+			}
+		}
+		catch(System.NullReferenceException) {
+			if (gun == null)
+				throw new InitializationException ("GM  (handleInputKeys): Gun transform is not available.");
+		}
+		catch(UnityEngine.MissingComponentException){
+			if (keymap == null)
+				throw new InitializationException ("GM (handleInputKeys): Keymap is not available.");
+			else if (headSprite == null)
+				throw new InitializationException ("GM  (handleInputKeys): Head sprite is not available on " + player.name + ".");
+			else if (gunSprite == null)
+				throw new InitializationException ("GM  (handleInputKeys): Gun sprite is not available.");
 		}
 	}
 
 	public GameObject createBullet(Vector3 position){
-		bullets = Instantiate (prefabBullets, position, Quaternion.identity, this.transform) as GameObject;//shooter.transform.FindChild("Gun").transform) as GameObject;
+		bullets = Instantiate (prefabBullets, position, Quaternion.identity, this.transform) as GameObject;
 		bullets.name = "Bullet";
 		return bullets;	
 	}
 
 	public Vector3 getPlayerPosition(string name){
-		return playerObj[0].transform.position;
+		if (playerObj.Count == 0)
+			return Vector3.zero;
+
+		foreach (GameObject player in playerObj) {
+			if (player.name == "name")
+				return player.transform.position;
+		}
+
+		Debug.Log ("Player with name " + name + " cannot be found.");
+		return Vector3.zero;
 	}
 
 	public void handleCollision(Unit obj, Collider2D coll){
+		if (coll.name.Contains ("Item") && obj.name.Contains ("Player")) {
+			Debug.Log (obj.name + "picked up " + coll.name);
+			if (coll.name == "Item 1") {
+				//obj.stats.damage = 10000;
+				//setUnitStats (stats); // stats.BASE_HP = 100000;
+				Destroy (coll.gameObject);
+			}
+		}
+
 		if (coll.gameObject.tag == "Bullet"  && coll.transform.GetComponent<Bullet>().bulletType == Bullet.BulletType.BULLET_PLAYER && obj.GetType() == typeof(Enemy) ) {
 			Bullet bull = coll.GetComponent<Bullet>();
 			obj.changeHP (-bull.damage);

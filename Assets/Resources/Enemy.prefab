@@ -11,6 +11,21 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1000014280646094}
   m_IsPrefabParent: 1
+--- !u!1 &1000010200618752
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 4000011011542204}
+  m_Layer: 0
+  m_Name: Barrel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1000010422350988
 GameObject:
   m_ObjectHideFlags: 0
@@ -79,6 +94,19 @@ Transform:
   - {fileID: 4000014103329624}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!4 &4000011011542204
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010200618752}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 4000014285375262}
+  m_RootOrder: 0
 --- !u!4 &4000014103329624
 Transform:
   m_ObjectHideFlags: 1
@@ -102,7 +130,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_Children: []
+  m_Children:
+  - {fileID: 4000011011542204}
   m_Father: {fileID: 4000010551477928}
   m_RootOrder: 0
 --- !u!50 &50000011950894266
@@ -191,15 +220,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectsBehind: []
   objectsInFront: []
-  stats:
-    hp: 0
-    speed: 0
-    attack_rate: 0
-    attack_speed: 0
-    luck: 0
-    damage: 0
-  gun: {fileID: 0}
-  mainWeapon: {fileID: 0}
+  waitList: []
 --- !u!114 &114000013162938108
 MonoBehaviour:
   m_ObjectHideFlags: 1

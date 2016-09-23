@@ -2,10 +2,14 @@
 using System.Collections;
 
 public class LayerChangeOnTrigger : MonoBehaviour {
-	private RLObject obj;
+	private RLObject parentUnit;
 
 	void Start(){
-		obj = GetComponentInParent<RLObject> ();
+		parentUnit = GetComponentInParent<RLObject> ();
+		if (parentUnit == null) {
+			Debug.Log ("No RLObject attached to " + this.name + ". Removing script.");
+			Destroy (this);
+		}
 	}
 
 	void OnTriggerEnter2D(Collider2D other)
@@ -13,7 +17,7 @@ public class LayerChangeOnTrigger : MonoBehaviour {
 		if(!other.isTrigger){
 			RLObject otherObject = other.gameObject.GetComponentInParent<RLObject> ();
 			if(otherObject != null)
-				obj.addBehind (otherObject);
+				parentUnit.addBehind (otherObject);
 		}
 	}
 
@@ -22,7 +26,7 @@ public class LayerChangeOnTrigger : MonoBehaviour {
 		if(!other.isTrigger){
 			RLObject otherObject = other.gameObject.GetComponentInParent<RLObject> ();
 			if(otherObject != null)
-				obj.removeBehind (otherObject);
+				parentUnit.removeBehind (otherObject);
 		}
 	}
 }

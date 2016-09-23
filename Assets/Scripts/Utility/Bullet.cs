@@ -3,16 +3,15 @@ using System.Collections;
 
 public class Bullet : MonoBehaviour {
 	public enum BulletType { BULLET_ENEMY, BULLET_PLAYER, BULLET_NEUTRAL };
-	public enum BulletElement { BULLET_EARTH, BULLET_WATER, BULLET_AIR, BULLET_FIRE};
 
 	public float lifetime;
 	public BulletType bulletType;
-	public BulletElement bulletElement;
+	public Elements bulletElement;
 	public int damage;
 	public string shooter;
 	public Vector2 destination;
 
-	void Start() { lifetime = 1.5f + Random.value; }
+	void Start() { lifetime = 1.5f + Random.value*0.3f; }
 
 	void Update () {
 		lifetime -= Time.deltaTime;
@@ -20,19 +19,17 @@ public class Bullet : MonoBehaviour {
 		if (lifetime <= 0)	leaveShellCasingOnGround ();
 	}
 
-	void OnTriggerEnter2D(Collider2D other){
-		Debug.Log ("Bullet collided with " + other.name);
-		//if(!other.transform.parent.GetComponent<Unit>()) leaveShellCasingOnGround ();
-	}
-
 	void leaveShellCasingOnGround(){
 		Vector3 currPosition = transform.position;
-		GameObject shell = new GameObject (); shell.transform.position = currPosition; 
+		GameObject shell = new GameObject ("Shell Casing"); 
+		shell.SetActive (false);
+		shell.transform.position = currPosition; 
 		shell.transform.parent = GameMaster.GM.transform; 
 		shell.AddComponent<SpriteRenderer> (); 
 		shell.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite> ("Rocket_TX");
 		shell.GetComponent<SpriteRenderer> ().sortingLayerName = "Foreground";
 		shell.GetComponent<SpriteRenderer> ().sortingOrder = -2;
+		shell.SetActive (true);
 		Destroy (this.gameObject);
 	}
 }

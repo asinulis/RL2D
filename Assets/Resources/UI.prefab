@@ -57,7 +57,7 @@ GameObject:
   - 222: {fileID: 222000013883730886}
   - 114: {fileID: 114000011515380320}
   m_Layer: 5
-  m_Name: UIWeaponTypeText
+  m_Name: UIWeapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -125,9 +125,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'Current weapon:
-
-    Water'
+  m_Text: 
 --- !u!114 &114000011528656550
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -160,7 +158,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'HP:'
+  m_Text: 
 --- !u!114 &114000011920044934
 MonoBehaviour:
   m_ObjectHideFlags: 1
