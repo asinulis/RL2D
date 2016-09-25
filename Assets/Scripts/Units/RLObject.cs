@@ -30,6 +30,7 @@ public abstract class RLObject : MonoBehaviour
 		foreach (SpriteRenderer sprR in spr) {
 			miny = Mathf.Min (miny, (int)Camera.main.WorldToScreenPoint (sprR.bounds.min).y);
 		}
+<<<<<<< HEAD
 		foreach (SpriteRenderer sprR in spr) {
 			sprR.sortingOrder = (int)miny * -1;
 		}
@@ -41,6 +42,32 @@ public abstract class RLObject : MonoBehaviour
 			RLObject otherObject = other.gameObject.GetComponentInParent<RLObject> ();
 			if(otherObject != null)
 				addBehind (otherObject);
+=======
+		if (!objectsBehind.Contains (other) && !hasInFront(other)) {
+			objectsBehind.Add (other);
+			if (other.getLayerNumber () >= this.getLayerNumber ()) {
+				setLayerNumber (other.getLayerNumber () + 1);
+			}
+			other.addInFront (this);
+		}
+	}
+
+	internal bool hasInFront(RLObject obj){
+		if (objectsInFront.Contains (obj)) {
+			return true;
+		}
+		foreach (RLObject obj1 in objectsInFront){
+			if (obj1.hasInFront (obj)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public void removeBehind(RLObject other){
+		if (waitList.Contains(other)){
+			waitList.Remove (other);
+>>>>>>> origin/master
 		}
 		*/
 	}
