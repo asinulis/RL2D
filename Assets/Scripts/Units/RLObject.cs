@@ -7,11 +7,12 @@ using System.Collections.Generic;
  * Only has an associated SpriteRenderer. Handles the dynamic layer ordering.
 */
 
-public abstract class RLObject : MonoBehaviour {
-	private List<RLObject> objectsBehind = new List<RLObject> ();
-	private List<RLObject> objectsInFront = new List<RLObject> ();
-	private SpriteRenderer sprRenderer;
-	private List<RLObject> waitList = new List<RLObject> ();
+public abstract class RLObject : MonoBehaviour 
+{
+	protected List<RLObject> objectsBehind = new List<RLObject> ();
+	protected List<RLObject> objectsInFront = new List<RLObject> ();
+	protected SpriteRenderer sprRenderer;
+	protected List<RLObject> waitList = new List<RLObject> ();
 
 	public virtual void Start () {
 		try{
@@ -22,28 +23,37 @@ public abstract class RLObject : MonoBehaviour {
 		}
 	}
 
-	public void addBehind(RLObject other){
-		if (objectsInFront.Contains (other) && !waitList.Contains(other)) {
-			waitList.Add (other);
+	public void Update()
+	{
+		float miny = Mathf.Infinity;
+		SpriteRenderer[] spr = GetComponentsInChildren<SpriteRenderer> (false);
+		foreach (SpriteRenderer sprR in spr) {
+			miny = Mathf.Min (miny, (int)Camera.main.WorldToScreenPoint (sprR.bounds.min).y);
 		}
-		if (!objectsBehind.Contains (other) && !objectsInFront.Contains (other)) {
-			objectsBehind.Add (other);
-			if (other.getLayerNumber () >= this.getLayerNumber ()) {
-				setLayerNumber (other.getLayerNumber () + 1);
-			}
-			other.addInFront (this);
+		foreach (SpriteRenderer sprR in spr) {
+			sprR.sortingOrder = (int)miny * -1;
 		}
 	}
 
-	public void removeBehind(RLObject other){
-		if (waitList.Contains(other)){
-			waitList.Remove (other);
+	public virtual void OnTriggerEnter2D(Collider2D other)
+	{/*
+		if(!other.isTrigger){
+			RLObject otherObject = other.gameObject.GetComponentInParent<RLObject> ();
+			if(otherObject != null)
+				addBehind (otherObject);
 		}
-		if (objectsBehind.Contains (other)) {
-			objectsBehind.Remove (other);
-			updateLayerNumber ();
-			other.removeInFront (this);
+		*/
+	}
+
+	public virtual void OnTriggerExit2D(Collider2D other)
+	{
+		/*
+		if(!other.isTrigger){
+			RLObject otherObject = other.gameObject.GetComponentInParent<RLObject> ();
+			if(otherObject != null)
+				removeFromLists (otherObject);
 		}
+		*/
 	}
 
 	internal void updateLayerNumber(){
@@ -64,29 +74,65 @@ public abstract class RLObject : MonoBehaviour {
 	}
 
 	private void setLayerNumber(int layer){
-		sprRenderer.sortingOrder = layer;
-		foreach (RLObject obj in objectsInFront) {
-			obj.updateLayerNumber ();
+		SpriteRenderer[] allSprites = GetComponentsInChildren<SpriteRenderer> ();
+		foreach (SpriteRenderer sprite in allSprites) {
+			sprite.sortingOrder = layer;
+			foreach (RLObject obj in objectsInFront) {
+				obj.updateLayerNumber ();
+			}
 		}
 	}
 
 	internal int getLayerNumber(){
+		if (sprRenderer == null)
+			return 0;
 		return sprRenderer.sortingOrder;
+	}
+
+
+	public void addBehind(RLObject other){
+		if(GameMaster.logMessages) GameMaster.LogMsg(" Adding " + other.gameObject.name + " behind " + this.gameObject.name, "addBehind");
+		if (objectsInFront.Contains (other) && !waitList.Contains(other)) {
+			waitList.Add (other);
+		}
+		if (!objectsBehind.Contains (other) && !hasInFront(other)) {
+			objectsBehind.Add (other);
+			if (other.getLayerNumber () >= this.getLayerNumber ()) {
+				setLayerNumber (other.getLayerNumber () + 1);
+			}
+			other.addInFront (this);
+		}
+	}
+
+	internal bool hasInFront(RLObject obj){
+		if (objectsInFront.Contains (obj))
+			return true;
+		foreach (RLObject obj1 in objectsInFront) {
+			if (obj1.hasInFront (obj))
+				return true;
+		}
+		return false;
+
+	}
+
+	public void removeFromLists(RLObject other){
+		if (objectsInFront.Contains (other)) {
+			objectsInFront.Remove (other);
+		}
+		else if(objectsBehind.Contains (other)) {
+			if(GameMaster.logMessages) GameMaster.LogMsg("Removing " + other.gameObject.name + " from behind " + this.gameObject.name, "removeBehind");
+			objectsBehind.Remove (other);
+			updateLayerNumber ();
+			other.removeFromLists (this);
+		}
+		else if (waitList.Contains(other)){
+			waitList.Remove (other);
+		}
 	}
 
 	internal void addInFront(RLObject other){
 		if (!objectsBehind.Contains(other) && !objectsInFront.Contains (other)) {
 			objectsInFront.Add (other);
-		}
-	}
-
-	internal void removeInFront(RLObject other) {
-		if (objectsInFront.Contains (other)) {
-			objectsInFront.Remove (other);
-		}
-		if (waitList.Contains (other)) {
-			addBehind (other);
-			waitList.Remove (other);
 		}
 	}
 }

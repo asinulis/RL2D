@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System;
 using Random = UnityEngine.Random;
 
@@ -64,6 +65,11 @@ public class GameMaster : MonoBehaviour {
 	GameObject bullets;
 	GameObject UI;
 	GameObject Audio;
+
+	public static void LogMsg(string message, string methodName = null)
+	{
+		Debug.Log(Time.time.ToString() + "(" + methodName + "): " + message);
+	}
 
 	void Awake(){
 		try{
@@ -150,22 +156,21 @@ public class GameMaster : MonoBehaviour {
 		UI = Instantiate (prefabUI);
 		UI.name = "UI";
 		for (int i = 0; i < noOfPlayers; i++) {
-			playerObj.Add (Instantiate (prefabPlayers [0], Vector3.zero, Quaternion.identity, UnitHolder.transform) as GameObject);
+			playerObj.Add (Instantiate (prefabPlayers [0], new Vector3(-5,-5,0), Quaternion.identity) as GameObject);
 			playerObj [i].name = "Player" + (i + 1).ToString ();
 		}
 		for (int i = 0; i < noOfEnemies; i++) {
 			Vector2 pos = Random.insideUnitCircle;
 			Vector3 spawnPos = new Vector3 (pos.x+Mathf.Min(i,10), pos.y+Mathf.Min(i,10), 0);
-			enemyObj.Add(Instantiate (prefabEnemys [0], spawnPos, Quaternion.identity, UnitHolder.transform) as GameObject);
+			enemyObj.Add(Instantiate (prefabEnemys [0], pos, Quaternion.identity, UnitHolder.transform) as GameObject);
 			enemyObj[i].name = "Enemy" + (i+1).ToString();
 		}
 	}
 
-	IEnumerable checkPlayerStatus(GameObject player){
+	internal void checkPlayerStatus(GameObject player){
 		if (player.GetComponent<Player>().stats.hp <= 0) {
-			Debug.LogError ("You are dead.");
+			UI.transform.FindChild ("Dead").gameObject.SetActive (true);
 			player.gameObject.SetActive (false);
-			yield return new WaitForSecondsRealtime (2f);
 			Application.Quit ();
 		}
 	}
@@ -178,17 +183,18 @@ public class GameMaster : MonoBehaviour {
 		UI.transform.FindChild ("UIWeapon").GetComponent<Text> ().text = "Weapon: " + player.mainWeapon.element.giveName () + "\nAmmunition: " + player.mainWeapon.ammunition + "\nDamage: " + damage; 
 	}
 
-	internal void handleKeyInputs(GameObject player){
-		GameObject gun	 			= null;
+	internal void handleKeyInputs(GameObject playerGO){
+		GameObject staff	 		= null;
 		KeyMap keymap 				= null;
 		SpriteRenderer headSprite 	= null;
 		SpriteRenderer gunSprite 	= null;
 
 		try{
-			gun 		= player.transform.FindChild ("Gun").gameObject;
-			keymap 		= player.GetComponent<Player> ().keymap;
-			headSprite 	= player.transform.FindChild ("Head").GetComponent<SpriteRenderer> ();
-			gunSprite 	= player.transform.FindChild ("Gun").GetComponent<SpriteRenderer> ();
+			Player player = playerGO.GetComponent<Player>();
+			staff 		= player.mainWeapon.gameObject;
+			keymap 		= player.keymap;
+			headSprite 	= player.head.GetComponent<SpriteRenderer> ();
+			gunSprite 	= player.staff.GetComponent<SpriteRenderer> ();
 
 			if (Input.GetKey (keymap.shiftKey)) {
 				player.GetComponent<Player>().stats.triggerEffect ();
@@ -209,7 +215,7 @@ public class GameMaster : MonoBehaviour {
 			pos.z = 0;
 			float angle = Mathf.Atan2 (pos.x, pos.y) * Mathf.Rad2Deg;
 
-			gun.transform.eulerAngles = new Vector3 (0, 0, -angle);
+			staff.transform.eulerAngles = new Vector3 (0, 0, -angle);
 
 			if (-180 <= angle && angle < -135)
 				headSprite.sprite = headsprites [0];
@@ -251,18 +257,18 @@ public class GameMaster : MonoBehaviour {
 			if(Time.time > playerScript.nextShot && Input.GetMouseButton(0))
 			{
 				playerScript.setShotTime (Time.time + (1 / playerScript.stats.attackRate));
-				playerScript.mainWeapon.Shoot (player, Bullet.BulletType.BULLET_PLAYER, pos.normalized);
+				playerScript.mainWeapon.Shoot (playerGO, Bullet.BulletType.BULLET_PLAYER, pos.normalized);
 			}
 		}
 		catch(System.NullReferenceException) {
-			if (gun == null)
-				throw new InitializationException ("GM  (handleInputKeys): Gun transform is not available.");
+			if (staff == null)
+				throw new InitializationException ("GM  (handleInputKeys): Staff transform is not available.");
 		}
 		catch(UnityEngine.MissingComponentException){
 			if (keymap == null)
 				throw new InitializationException ("GM (handleInputKeys): Keymap is not available.");
 			else if (headSprite == null)
-				throw new InitializationException ("GM  (handleInputKeys): Head sprite is not available on " + player.name + ".");
+				throw new InitializationException ("GM  (handleInputKeys): Head sprite is not available on " + playerGO.name + ".");
 			else if (gunSprite == null)
 				throw new InitializationException ("GM  (handleInputKeys): Gun sprite is not available.");
 		}
@@ -287,27 +293,36 @@ public class GameMaster : MonoBehaviour {
 		return Vector3.zero;
 	}
 
-	public void handleCollision(Unit obj, Collider2D coll){
-		if (coll.name.Contains ("Item") && obj.name.Contains ("Player")) {
-			Debug.Log (obj.name + "picked up " + coll.name);
-			if (coll.name == "Item 1") {
-				//obj.stats.damage = 10000;
-				//setUnitStats (stats); // stats.BASE_HP = 100000;
-				Destroy (coll.gameObject);
+	public void handleTriggerWithUnit(Unit unit, Collider2D coll){
+		if (!coll.name.Contains ("Bullet")) 
+		{
+			LogMsg ("Resolving trigger-collision between " + unit.gameObject.name + " and " + coll.name, "handleCollision");
+			if (coll.name.Contains ("Item") && unit.name.Contains ("Player")) {
+				Debug.Log (unit.name + "picked up " + coll.name);
+				if (coll.name == "Item 1") {
+					//obj.stats.damage = 10000;
+					//setUnitStats (stats); // stats.BASE_HP = 100000;
+					Destroy (coll.gameObject);
+				}
 			}
 		}
+	}
 
-		if (coll.gameObject.tag == "Bullet"  && coll.transform.GetComponent<Bullet>().bulletType == Bullet.BulletType.BULLET_PLAYER && obj.GetType() == typeof(Enemy) ) {
-			Bullet bull = coll.GetComponent<Bullet>();
-			obj.changeHP (-bull.damage);
-			GameObject.Destroy (coll.gameObject);
-			Debug.Log (obj.gameObject.name + " has been hit by " + bull.shooter + " and has taken " + bull.damage + " damage.");
-		}
-		else if (coll.gameObject.tag == "Bullet"  && coll.transform.GetComponent<Bullet>().bulletType == Bullet.BulletType.BULLET_ENEMY && obj.GetType() == typeof(Player)) {
-			Bullet bull = coll.GetComponent<Bullet>();
-			obj.changeHP(-bull.damage);
-			GameObject.Destroy (coll.gameObject);
-			Debug.Log (obj.gameObject.name + " has been hit by " + bull.shooter + " and has taken " + bull.damage + " damage.");
+	public void handleCollisionWithUnit(Unit unit, Collision2D other)
+	{
+		if (other.gameObject.tag == "Bullet") {
+			Bullet bullet = other.gameObject.GetComponent<Bullet> ();
+			if (bullet.bulletType == Bullet.BulletType.BULLET_PLAYER && unit.GetType () == typeof(Enemy)) {
+				unit.changeHP (-bullet.damage);
+				GameObject.Destroy (other.gameObject);
+				if (logMessages)
+					Debug.Log (unit.gameObject.name + " has been hit by " + bullet.shooter + " and has taken " + bullet.damage + " damage.");
+			} else if (bullet.bulletType == Bullet.BulletType.BULLET_ENEMY && unit.GetType () == typeof(Player)) {
+				unit.changeHP (-bullet.damage);
+				GameObject.Destroy (other.gameObject);
+				if (logMessages)
+					Debug.Log (unit.gameObject.name + " has been hit by " + bullet.shooter + " and has taken " + bullet.damage + " damage.");
+			}
 		}
 	}
 }

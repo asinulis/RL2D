@@ -11,6 +11,21 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1000014115629364}
   m_IsPrefabParent: 1
+--- !u!1 &1000013725464612
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 4000012675800778}
+  m_Layer: 0
+  m_Name: Firepoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1000014115629364
 GameObject:
   m_ObjectHideFlags: 0
@@ -22,12 +37,25 @@ GameObject:
   - 212: {fileID: 212000011031111322}
   - 114: {fileID: 114000011823681290}
   m_Layer: 0
-  m_Name: Weapon
+  m_Name: Staff
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!4 &4000012675800778
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013725464612}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 4000014047172498}
+  m_RootOrder: 0
 --- !u!4 &4000014047172498
 Transform:
   m_ObjectHideFlags: 1
@@ -38,7 +66,8 @@ Transform:
   m_LocalPosition: {x: 0.618, y: -0.884, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_Children: []
+  m_Children:
+  - {fileID: 4000012675800778}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!114 &114000011823681290
@@ -52,8 +81,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 847840356be3e594c8d7373937c0a0f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 1000010179494642, guid: 51e9ed517bcbc2541b629ef496296206,
-    type: 2}
+  damage: 10
+  ammunition: 1
+  element: 2
 --- !u!212 &212000011031111322
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -83,7 +113,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1665807643
   m_SortingOrder: 0
-  m_Sprite: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: d8b86f9a1fcf1b248bc95f6807bb15e1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

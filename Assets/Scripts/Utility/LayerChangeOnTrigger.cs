@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class LayerChangeOnTrigger : MonoBehaviour {
-	private RLObject parentUnit;
+	public RLObject parentUnit;
 
 	void Start(){
 		parentUnit = GetComponentInParent<RLObject> ();
@@ -26,7 +26,7 @@ public class LayerChangeOnTrigger : MonoBehaviour {
 		if(!other.isTrigger){
 			RLObject otherObject = other.gameObject.GetComponentInParent<RLObject> ();
 			if(otherObject != null)
-				parentUnit.removeBehind (otherObject);
+				parentUnit.removeFromLists (otherObject);
 		}
 	}
 }

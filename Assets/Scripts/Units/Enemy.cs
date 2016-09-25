@@ -19,11 +19,12 @@ using System;
 
 public class Enemy : Unit {
 
-	void Update(){
+	void LateUpdate(){
 		
 		if (stats.hp <= 0) {
+			SendMessage ("removeFromLists", this);
 			createCorpse (trans.position);
-			this.gameObject.SetActive (false);
+			Destroy(this.gameObject);
 		}
 
 		Vector3 playerPos = GameMaster.GM.getPlayerPosition ("Player1");

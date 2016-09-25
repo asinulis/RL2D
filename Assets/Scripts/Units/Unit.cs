@@ -8,26 +8,27 @@ using System.Collections.Generic;
 */
 
 public abstract class Unit : RLObject {
-	public Animator animator { get; private set; }
-	public Rigidbody2D rb { get; private set; }
-	public Transform trans { get; private set; }
-	public UnitStats stats{ get; private set; }
-	public GameObject gun { get; private set; }
-	public GameObject barrel { get; private set; }
-	public Weapon mainWeapon { get; private set; }
+	public Animator animator { get; protected set; }
+	public Rigidbody2D rb { get; protected set; }
+	public Transform trans { get; protected set; }
+	public UnitStats stats{ get; protected set; }
+	public GameObject staff { get; protected set; }
+	public GameObject firePoint { get; protected set; }
+	public Weapon mainWeapon { get; protected set; }
 
 	public override void Start()
 	{
 		try{
 			base.Start ();
 
-			animator = GetComponent<Animator>();
 			rb = GetComponent<Rigidbody2D> ();
 			trans = GetComponent<Transform> ();
+			animator = GetComponent<Animator> ();
 			stats = new UnitStats (this.gameObject, new List<AbstractEffect>{new SprintEffect()});
-			gun = gameObject.transform.FindChild ("Gun").gameObject;
-			barrel = gun.transform.FindChild ("Barrel").gameObject;
-			mainWeapon = gun.transform.GetComponent<Weapon> ();
+			staff = gameObject.transform.FindChild ("Staff").gameObject;
+			firePoint = staff.transform.FindChild ("Firepoint").gameObject;
+			sprRenderer = GetComponent<SpriteRenderer>();
+			mainWeapon = staff.transform.GetComponent<Weapon> ();
 		}
 		catch (System.NullReferenceException){
 			if (animator == null) {
@@ -38,11 +39,11 @@ public abstract class Unit : RLObject {
 				throw new InitializationException ("Unit: Missing transform component during initialization of " + gameObject.name);
 			} else if (stats == null) {
 				throw new InitializationException ("Unit: Missing Stats component during initialization of " + gameObject.name);
-			} else if (gun == null) {
-				throw new InitializationException ("Unit: Missing Gun child during initialization of " + gameObject.name);
-			} else if (barrel == null) {
-				throw new InitializationException ("Unit: Missing Barrel child of Gun during initialization of " + gameObject.name);
-			} else if (mainWeapon == null) {
+			} else if (staff == null) {
+				throw new InitializationException ("Unit: Missing Staff child during initialization of " + gameObject.name);
+			} else if (firePoint == null) {
+				throw new InitializationException ("Unit: Missing Firepoint child of Staff during initialization of " + gameObject.name);
+			}  else if (mainWeapon == null) {
 				throw new InitializationException ("Unit: Missing Weapon component during initialization of " + gameObject.name);
 			}
 		}
@@ -56,7 +57,12 @@ public abstract class Unit : RLObject {
 		stats.hp += diff;
 	}
 
-	public virtual void OnTriggerEnter2D(Collider2D other){
-		GameMaster.GM.handleCollision (this, other);
+	void OnTriggerEnter2D(Collider2D other){
+		base.OnTriggerEnter2D (other);
+		GameMaster.GM.handleTriggerWithUnit (this, other);
+	}
+
+	void OnCollisionEnter2D(Collision2D other){
+		GameMaster.GM.handleCollisionWithUnit (this, other);
 	}
 }

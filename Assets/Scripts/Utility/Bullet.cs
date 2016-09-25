@@ -19,7 +19,7 @@ public class Bullet : MonoBehaviour {
 		if (lifetime <= 0)	leaveShellCasingOnGround ();
 	}
 
-	void leaveShellCasingOnGround(){
+	public void leaveShellCasingOnGround(){
 		Vector3 currPosition = transform.position;
 		GameObject shell = new GameObject ("Shell Casing"); 
 		shell.SetActive (false);

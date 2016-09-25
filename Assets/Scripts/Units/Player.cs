@@ -24,22 +24,31 @@ public class Player : Unit {
 	public enum Attribute {FLYING, INVISIBLE, ON_FIRE, };							// TODO: add attributes
 	public float nextShot { get; private set; }
 	public Dictionary<Attribute, bool> dict = new Dictionary<Attribute, bool>();	// TODO: set up the dictionary and its usage
+	public GameObject head { get; private set; }
+	public GameObject body { get ; private set; }
 
     public override void Start()
 	{
 		try{
 		base.Start ();
+			stats.damage = 300;
 		dict.Add (Attribute.FLYING, false);
 		dict.Add (Attribute.ON_FIRE, false);
 		dict.Add (Attribute.INVISIBLE, false);
 		keymap = new KeyMap ();
 		nextShot = Time.time;
+		head = transform.FindChild("Head").gameObject;
+		body = transform.FindChild("Body").gameObject;
+		sprRenderer = body.GetComponent<SpriteRenderer>();
+		if(animator == null) animator = body.GetComponent<Animator>();
 		}
 		catch (System.NullReferenceException){
 			if (gameObject.GetComponent<Player> () == null)
 				throw new InitializationException ("Player: Can't find player script.");
-			else if (gameObject.transform.FindChild ("Head") == null)
+			else if (head == null)
 				throw new InitializationException ("Player: Can't find child named Head.");
+			else if (body == null)
+				throw new InitializationException ("Player: Can't find child named Body.");
 		}
     }
 
