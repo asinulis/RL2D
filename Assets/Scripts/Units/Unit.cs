@@ -58,7 +58,6 @@ public abstract class Unit : RLObject {
 	}
 
 	void OnTriggerEnter2D(Collider2D other){
-		base.OnTriggerEnter2D (other);
 		GameMaster.GM.handleTriggerWithUnit (this, other);
 	}
 

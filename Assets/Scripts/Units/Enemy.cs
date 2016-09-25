@@ -22,7 +22,6 @@ public class Enemy : Unit {
 	void LateUpdate(){
 		
 		if (stats.hp <= 0) {
-			SendMessage ("removeFromLists", this);
 			createCorpse (trans.position);
 			Destroy(this.gameObject);
 		}
@@ -48,8 +47,8 @@ public class Enemy : Unit {
 		shell.transform.parent = GameMaster.GM.transform; 
 		shell.AddComponent<SpriteRenderer> (); 
 		shell.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite> ("corpse");
-		shell.GetComponent<SpriteRenderer> ().sortingLayerName = "Foreground";
-		shell.GetComponent<SpriteRenderer> ().sortingOrder = -2;
+		shell.GetComponent<SpriteRenderer> ().sortingLayerName = "Background";
+		shell.GetComponent<SpriteRenderer> ().sortingOrder = 1;
 		shell.SetActive (true);
 		Destroy (this.gameObject);
 	}

@@ -161,7 +161,7 @@ public class GameMaster : MonoBehaviour {
 		}
 		for (int i = 0; i < noOfEnemies; i++) {
 			Vector2 pos = Random.insideUnitCircle;
-			Vector3 spawnPos = new Vector3 (pos.x+Mathf.Min(i,10), pos.y+Mathf.Min(i,10), 0);
+//			Vector3 spawnPos = new Vector3 (pos.x+Mathf.Min(i,10), pos.y+Mathf.Min(i,10), 0);
 			enemyObj.Add(Instantiate (prefabEnemys [0], pos, Quaternion.identity, UnitHolder.transform) as GameObject);
 			enemyObj[i].name = "Enemy" + (i+1).ToString();
 		}
@@ -180,7 +180,7 @@ public class GameMaster : MonoBehaviour {
 		int damage;
 		damage = player.stats.damage + player.mainWeapon.damage;
 		UI.transform.FindChild ("UIHPText").GetComponent<Text> ().text = "HP: " + player.stats.hp.ToString ();
-		UI.transform.FindChild ("UIWeapon").GetComponent<Text> ().text = "Weapon: " + player.mainWeapon.element.giveName () + "\nAmmunition: " + player.mainWeapon.ammunition + "\nDamage: " + damage; 
+		UI.transform.FindChild ("UIWeapon").GetComponent<Text> ().text = "Weapon: " + player.mainWeapon.element.giveName () + "\nAmmunition: " + player.mainWeapon.ammunition[player.mainWeapon.element] + "\nDamage: " + damage; 
 	}
 
 	internal void handleKeyInputs(GameObject playerGO){
@@ -296,7 +296,7 @@ public class GameMaster : MonoBehaviour {
 	public void handleTriggerWithUnit(Unit unit, Collider2D coll){
 		if (!coll.name.Contains ("Bullet")) 
 		{
-			LogMsg ("Resolving trigger-collision between " + unit.gameObject.name + " and " + coll.name, "handleCollision");
+			if(GameMaster.logMessages) LogMsg ("Resolving trigger-collision between " + unit.gameObject.name + " and " + coll.name, "handleCollision");
 			if (coll.name.Contains ("Item") && unit.name.Contains ("Player")) {
 				Debug.Log (unit.name + "picked up " + coll.name);
 				if (coll.name == "Item 1") {
