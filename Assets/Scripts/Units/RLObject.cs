@@ -26,13 +26,25 @@ public abstract class RLObject : MonoBehaviour {
 		if (objectsInFront.Contains (other) && !waitList.Contains(other)) {
 			waitList.Add (other);
 		}
-		if (!objectsBehind.Contains (other) && !objectsInFront.Contains (other)) {
+		if (!objectsBehind.Contains (other) && !hasInFront(other)) {
 			objectsBehind.Add (other);
 			if (other.getLayerNumber () >= this.getLayerNumber ()) {
 				setLayerNumber (other.getLayerNumber () + 1);
 			}
 			other.addInFront (this);
 		}
+	}
+
+	internal bool hasInFront(RLObject obj){
+		if (objectsInFront.Contains (obj)) {
+			return true;
+		}
+		foreach (RLObject obj1 in objectsInFront){
+			if (obj1.hasInFront (obj)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public void removeBehind(RLObject other){
