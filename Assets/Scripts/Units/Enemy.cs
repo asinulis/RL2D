@@ -20,13 +20,36 @@ using System;
 public class Enemy : Unit {
 
 	void Update(){
-		Vector3 player = GameMaster.GM.getPlayerPosition ("Player 1");
-		Vector3 direction = player - transform.position; direction.Normalize ();
-		float rnd2 = Random.value;
-		if (rnd2 > 0.99)
-			mainWeapon.Shoot (gameObject, Bullet.BulletType.BULLET_ENEMY, direction*stats.attackSpeed*0.1f);
+		
 		if (stats.hp <= 0) {
-			this.gameObject.SetActive(false);
+			createCorpse (trans.position);
+			this.gameObject.SetActive (false);
 		}
+
+		Vector3 playerPos = GameMaster.GM.getPlayerPosition ("Player1");
+		if ((playerPos - trans.position).sqrMagnitude <= 8) {
+			Vector3 direction = (playerPos - trans.position);
+			direction.Normalize ();
+			float rnd2 = Random.value;
+			if (rnd2 > 0.99)
+				mainWeapon.Shoot (gameObject, Bullet.BulletType.BULLET_ENEMY, direction * stats.attackSpeed * 0.1f);
+
+		} else {
+			//WaitForSeconds (1f);
+			//yield return new WaitForSecondsRealtime(15f);
+		}
+	}
+
+	internal void createCorpse(Vector3 position){
+		GameObject shell = new GameObject ("Corpse"); 
+		shell.SetActive (false);
+		shell.transform.position = position; 
+		shell.transform.parent = GameMaster.GM.transform; 
+		shell.AddComponent<SpriteRenderer> (); 
+		shell.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite> ("corpse");
+		shell.GetComponent<SpriteRenderer> ().sortingLayerName = "Foreground";
+		shell.GetComponent<SpriteRenderer> ().sortingOrder = -2;
+		shell.SetActive (true);
+		Destroy (this.gameObject);
 	}
 }

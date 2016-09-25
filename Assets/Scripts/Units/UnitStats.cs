@@ -18,9 +18,10 @@ public class UnitStats {
 	public float luck;
 	public float accuracy;
 	public int damage;
-	List<AbstractEffect> triggerEffects = new List<AbstractEffect>();
-	AbstractEffect currentTriggerEffect;
-	List<AbstractEffect> activeEffects = new List<AbstractEffect> ();
+
+	List<AbstractEffect>	triggerEffects = new List<AbstractEffect>();
+	List<AbstractEffect> 	activeEffects = new List<AbstractEffect> ();
+	AbstractEffect 			currentTriggerEffect;
 
 	public UnitStats(GameObject playerObject, List<AbstractEffect> start_effects = null){
 		this.playerObject = playerObject;

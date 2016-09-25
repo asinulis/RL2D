@@ -21,9 +21,9 @@ using System;
 
 public class Player : Unit {
 	public KeyMap keymap { get; private set; }
-	public enum Attribute {FLYING, INVISIBLE, ON_FIRE, };								// TODO: add attributes
+	public enum Attribute {FLYING, INVISIBLE, ON_FIRE, };							// TODO: add attributes
 	public float nextShot { get; private set; }
-	Dictionary<Attribute, bool> dict = new Dictionary<Attribute, bool>();	// TODO: set up the dictionary and its usage
+	public Dictionary<Attribute, bool> dict = new Dictionary<Attribute, bool>();	// TODO: set up the dictionary and its usage
 
     public override void Start()
 	{

@@ -5,6 +5,18 @@ using System.Collections.Generic;
 using System;
 using Random = UnityEngine.Random;
 
+
+/*
+ * GameMaster (with static member GM) is responsible for preloading and instantiating most objects. 
+ * 1) Loading all prefabs for players, enemies, weapons, the background, ...
+ * 2) Handles the user interface.
+ * 3) Creating objects such as player, enemies, and bullets.
+ * 4) Setting up the camera control script.
+ * 
+ * 
+ * 
+*/
+
 public enum Elements { ELEMENT_EARTH, ELEMENT_WATER, ELEMENT_AIR, ELEMENT_FIRE};
 static class BulletElementMethods {
 	public static string giveName(this Elements elem)
@@ -42,11 +54,11 @@ public class GameMaster : MonoBehaviour {
 	public int noOfEnemies;
 
 	// Player
-	List<GameObject> playerObj;			// TODO: can only be public if one wants to use the procedure given below (playerObj.add(Instantiate(...)) - why?
+	List<GameObject> playerObj;			
 	Player playerScript;
 
 	// GameObjects for various objects that are instantiated
-	List<GameObject> enemyObj;			// TODO: can only be public if one wants to use the procedure given below (playerObj.add(Instantiate(...)) - why?
+	List<GameObject> enemyObj;		
 	GameObject weaponObj;
 	GameObject background;
 	GameObject bullets;
@@ -149,7 +161,7 @@ public class GameMaster : MonoBehaviour {
 		}
 	}
 
-	IEnumerator checkPlayerStatus(GameObject player){
+	IEnumerable checkPlayerStatus(GameObject player){
 		if (player.GetComponent<Player>().stats.hp <= 0) {
 			Debug.LogError ("You are dead.");
 			player.gameObject.SetActive (false);
@@ -159,8 +171,11 @@ public class GameMaster : MonoBehaviour {
 	}
 
 	internal void displayUI (){
-		UI.transform.FindChild ("UIHPText").GetComponent<Text> ().text = "HP: " + playerScript.stats.hp.ToString ();
-		UI.transform.FindChild ("UIWeapon").GetComponent<Text> ().text = "Weapon: " + playerObj [0].gameObject.GetComponent<Unit> ().mainWeapon.element.giveName () + "\nAmmunition: " + playerObj [0].gameObject.GetComponent<Unit> ().mainWeapon.ammunition + "\nDamage: " + playerObj [0].gameObject.GetComponent<Unit> ().mainWeapon.damage; 
+		Unit player = playerObj [0].gameObject.GetComponent<Unit> ();
+		int damage;
+		damage = player.stats.damage + player.mainWeapon.damage;
+		UI.transform.FindChild ("UIHPText").GetComponent<Text> ().text = "HP: " + player.stats.hp.ToString ();
+		UI.transform.FindChild ("UIWeapon").GetComponent<Text> ().text = "Weapon: " + player.mainWeapon.element.giveName () + "\nAmmunition: " + player.mainWeapon.ammunition + "\nDamage: " + damage; 
 	}
 
 	internal void handleKeyInputs(GameObject player){
@@ -264,7 +279,7 @@ public class GameMaster : MonoBehaviour {
 			return Vector3.zero;
 
 		foreach (GameObject player in playerObj) {
-			if (player.name == "name")
+			if (player.name == name)
 				return player.transform.position;
 		}
 

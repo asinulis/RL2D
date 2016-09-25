@@ -26,9 +26,8 @@ public abstract class Unit : RLObject {
 			trans = GetComponent<Transform> ();
 			stats = new UnitStats (this.gameObject, new List<AbstractEffect>{new SprintEffect()});
 			gun = gameObject.transform.FindChild ("Gun").gameObject;
-			mainWeapon = gun.transform.GetComponent<Weapon> ();
 			barrel = gun.transform.FindChild ("Barrel").gameObject;
-			setUnitStats (stats);
+			mainWeapon = gun.transform.GetComponent<Weapon> ();
 		}
 		catch (System.NullReferenceException){
 			if (animator == null) {

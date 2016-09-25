@@ -8,10 +8,10 @@ using System.Collections.Generic;
 */
 
 public abstract class RLObject : MonoBehaviour {
-	public List<RLObject> objectsBehind = new List<RLObject> ();
-	public List<RLObject> objectsInFront = new List<RLObject> ();
-	public SpriteRenderer sprRenderer;
-	public List<RLObject> waitList = new List<RLObject> ();
+	private List<RLObject> objectsBehind = new List<RLObject> ();
+	private List<RLObject> objectsInFront = new List<RLObject> ();
+	private SpriteRenderer sprRenderer;
+	private List<RLObject> waitList = new List<RLObject> ();
 
 	public virtual void Start () {
 		try{
